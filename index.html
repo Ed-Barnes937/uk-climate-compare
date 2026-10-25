@@ -14982,7 +14982,7 @@ window.dash = (() => {
 .uk-seg button { font: inherit; font-size: var(--cds-font-size-caption); padding: var(--cds-pad-xs) var(--cds-pad-sm); background: transparent; color: var(--color-fg-muted); border: 0; cursor: pointer; }
 .uk-seg button + button { border-left: 1px solid var(--color-border-line); }
 .uk-seg button[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); }
-.uk-seg button:focus-visible, .uk-pick:focus-visible, .uk-th:focus-visible, .uk-chip button:focus-visible, .uk-search:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+.uk-seg button:focus-visible, .uk-pick:focus-visible, .uk-th:focus-visible, .uk-x:focus-visible, .uk-info-add:focus-visible, .uk-search:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
 .uk-section { display: flex; flex-direction: column; gap: var(--cds-gap-md); }
 .uk-section h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
 .uk-sub { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: 0; }
@@ -14994,9 +14994,17 @@ window.dash = (() => {
 .uk-chart { min-height: 230px; position: relative; }
 .uk-chart svg { display: block; overflow: visible; }
 .uk-chart text { fill: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
-.uk-chips { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); min-height: 2rem; align-items: center; }
-.uk-chip { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); border: 1px solid var(--color-border-line); border-radius: 999px; padding: 2px 4px 2px 10px; font-size: var(--cds-font-size-caption); background: var(--color-panel); }
-.uk-chip button { border: 0; background: transparent; color: var(--color-fg-muted); cursor: pointer; font: inherit; padding: 0 6px; border-radius: 999px; }
+.uk-chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: var(--cds-gap-sm); min-height: 2rem; align-items: start; }
+.uk-chip { display: flex; flex-direction: column; gap: var(--cds-gap-xs); border: 1px solid var(--color-border-line); border-top: 3px solid var(--chip); border-radius: var(--cds-radius); padding: var(--cds-pad-xs) var(--cds-pad-xs) var(--cds-pad-sm) var(--cds-pad-sm); background: var(--color-panel); min-width: 0; }
+.uk-chip-h { display: flex; align-items: flex-start; gap: var(--cds-gap-xs); }
+.uk-chip-h > span:first-child { flex: 1; min-width: 0; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-body); padding-top: 2px; }
+.uk-chip-h small { display: block; font-weight: 400; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.uk-x { border: 0; background: transparent; color: var(--color-fg-muted); cursor: pointer; font: inherit; font-size: 1.1rem; line-height: 1; width: 28px; height: 28px; border-radius: var(--cds-radius); flex: none; }
+.uk-x:hover { background: var(--color-bg); color: var(--color-fg); }
+.uk-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--cds-gap-sm) var(--cds-gap-sm); margin: 0; padding-right: var(--cds-pad-xs); font-variant-numeric: tabular-nums; }
+.uk-stats div { min-width: 0; }
+.uk-stats dt { font-size: 0.6875rem; color: var(--color-fg-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.uk-stats dd { margin: 0; font-size: var(--cds-font-size-body); white-space: nowrap; }
 .uk-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
 .uk-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); z-index: 2; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .uk-tip .uk-tip-h { color: var(--cds-text-secondary); margin-bottom: 2px; }
@@ -15017,12 +15025,26 @@ window.dash = (() => {
 .uk-zoom button:hover { background: var(--color-bg); }
 .uk-zoom button:disabled { color: var(--color-fg-muted); opacity: .5; cursor: default; }
 .uk-zoom svg { width: 14px; height: 14px; display: block; margin: auto; }
+.uk-info { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-sm) var(--cds-pad-xs) var(--cds-pad-sm) var(--cds-pad-sm); display: flex; flex-direction: column; gap: var(--cds-gap-xs); font-variant-numeric: tabular-nums; }
+.uk-info[hidden] { display: none; }
+.uk-info-v { font-size: var(--cds-font-size-body); }
+.uk-info-note { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.uk-info-add { align-self: flex-start; margin-top: var(--cds-gap-xs); font: inherit; font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-radius: var(--cds-radius); border: 1px solid var(--color-fg); background: var(--color-fg); color: var(--color-bg); cursor: pointer; }
+.uk-info-add[aria-pressed="true"] { background: transparent; color: var(--color-fg); }
+.uk-info-add:disabled { opacity: .5; cursor: default; }
 .uk-legend { display: flex; align-items: center; gap: var(--cds-gap-sm); flex-wrap: wrap; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; min-height: 1.25rem; }
 .uk-ramp { width: 8rem; height: 8px; border-radius: 4px; }
 .uk-tabletools { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); justify-content: space-between; align-items: center; }
 .uk-tablewrap { overflow: auto; max-height: 36rem; }
 .uk-table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: var(--cds-font-size-body); }
-.uk-table th { position: sticky; top: 0; background: var(--color-panel); text-align: right; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding: 0; border-bottom: 1px solid var(--color-border-line); vertical-align: bottom; z-index: 1; }
+.uk-table th { position: sticky; top: 0; background: var(--color-panel); text-align: right; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding: 0; border-bottom: 1px solid var(--color-border-line); vertical-align: bottom; z-index: 2; }
+/* keep the pick and place columns in view while the table scrolls sideways */
+.uk-table th:nth-child(-n+2), .uk-table td:nth-child(-n+2) { position: sticky; background: var(--color-panel); }
+.uk-table td:nth-child(-n+2) { z-index: 1; }
+.uk-table thead th:nth-child(-n+2) { z-index: 3; }
+.uk-table th:first-child, .uk-table td:first-child { left: 0; }
+.uk-table th:nth-child(2), .uk-table td:nth-child(2) { left: var(--uk-pickw, 34px); box-shadow: inset -1px 0 0 var(--color-border-line); }
+@media (max-width: 40rem) { .uk-table td:nth-child(2) { white-space: normal; min-width: 8.5rem; max-width: 10.5rem; } }
 .uk-table th.uk-left, .uk-table td.uk-left { text-align: left; }
 .uk-th { font: inherit; color: inherit; background: transparent; border: 0; cursor: pointer; padding: var(--cds-pad-xs) var(--cds-pad-sm); width: 100%; text-align: inherit; line-height: 1.3; }
 .uk-th small { display: block; font-weight: 400; opacity: .8; }
@@ -15058,7 +15080,7 @@ window.dash = (() => {
   <section class="uk-section" id="compare">
     <div>
       <h2>Compare places</h2>
-      <p class="uk-sub">Click a council area or a station dot on the map, or a row in the table, to add or remove it. You can compare up to six.</p>
+      <p class="uk-sub">Click a council area or a station dot on the map, or a row in the table, to add or remove it. On a phone, tap a place on the map to see its figures, then add it. You can compare up to six.</p>
     </div>
     <div class="uk-chips" id="chips" data-source="summary"></div>
     <div class="uk-split">
@@ -15080,6 +15102,7 @@ window.dash = (() => {
         <p class="uk-sub">Council areas, with the largest split into pieces of about 1,000 km², shaded by their estimated average. Dots are weather stations. Drag to pan; zoom with the buttons, a pinch, or ctrl/⌘ + scroll.</p>
         <div class="uk-map dash-skeleton" id="map" data-source="boundaries summary stations"></div>
         <div class="uk-legend" id="map-legend" data-source="summary"></div>
+        <div class="uk-info" id="map-info" data-source="summary" hidden></div>
       </div>
       <div class="uk-charts">
         <div class="uk-card" id="card-temp"><h3>Temperature</h3><p class="uk-sub">Average daily high (solid) and overnight low (dashed), °C</p><div class="uk-chart dash-skeleton" id="chart-temp" data-source="climate"></div></div>
@@ -15351,23 +15374,55 @@ function names() {
   return new Map((periodRows() || []).map((r) => [r.id, r]));
 }
 
+const CARD_STATS = [
+  ['summer_high', 'Summer high', (v) => `${f1(v)}°C`],
+  ['winter_low', 'Winter low', (v) => `${f1(v)}°C`],
+  ['rain', 'Rain', (v) => `${f0(v)} mm`],
+  ['raindays', 'Rain days', f0],
+  ['sun', 'Sunshine', (v) => `${f0(v)} h`],
+  ['frost', 'Frosts', f0],
+  ['day_short', 'Shortest day', hm],
+  ['house', 'Detached', money],
+];
+
 function drawChips() {
   const el = document.getElementById('chips');
   const byId = names();
-  const { picks } = params();
+  const { picks, period } = params();
   if (!picks.length) { el.replaceChildren(span('uk-sub', 'Nothing picked yet.')); return; }
   el.replaceChildren(...picks.map((id, i) => {
     const r = byId.get(id);
-    const chip = span('uk-chip', '');
-    const dot = span('uk-dot', '');
-    dot.style.background = dash.colors[i];
+    const card = document.createElement('div');
+    card.className = 'uk-chip';
+    card.style.setProperty('--chip', dash.colors[i]);
+    const title = span('', r ? r.name : id);
+    if (r) title.append(Object.assign(document.createElement('small'), { textContent: r.kind === 'station' ? `Weather station · ${r.nation}` : `${r.area} · ${r.nation}` }));
     const x = document.createElement('button');
     x.type = 'button';
+    x.className = 'uk-x';
     x.dataset.id = id;
     x.setAttribute('aria-label', `Remove ${r?.name || id}`);
     x.textContent = '×';
-    chip.append(dot, span('', r ? `${r.name}${r.kind === 'station' ? ' (station)' : ''}` : id), x);
-    return chip;
+    const head = span('uk-chip-h', '');
+    head.append(title, x);
+    card.append(head);
+    if (r) {
+      const dl = document.createElement('dl');
+      dl.className = 'uk-stats';
+      for (const [k, label, fmt] of CARD_STATS) {
+        const d = document.createElement('div');
+        const dt = document.createElement('dt');
+        dt.textContent = label;
+        const dd = document.createElement('dd');
+        if (r[k] == null) dd.append(span('uk-na', 'n/a'));
+        else dd.append(span('', `${k === 'house' && r.house_basis === 'estimate' ? '~' : ''}${fmt(r[k])}`, { 'data-source': 'summary', 'data-field': k, 'data-where': `id=${encodeURIComponent(r.id)}&period=${period}` }));
+        if (k === 'house' && r[k] != null) dd.title = HOUSE_BASIS[r.house_basis](r);
+        d.append(dt, dd);
+        dl.append(d);
+      }
+      card.append(dl);
+    }
+    return card;
   }));
 }
 
@@ -15388,6 +15443,10 @@ function drawTable() {
     if (x == null) return 1;
     if (y == null) return -1;
     return sortKey === 'name' ? sortDir * String(x).localeCompare(String(y)) : sortDir * (x - y);
+  });
+  requestAnimationFrame(() => {
+    const w = document.querySelector('#table thead th')?.offsetWidth;
+    if (w) document.getElementById('table').style.setProperty('--uk-pickw', `${w}px`);
   });
   tbody.replaceChildren(...sorted.map((r) => {
     const tr = document.createElement('tr');
@@ -15533,6 +15592,45 @@ const resolveColor = (css) => {
 };
 
 const ZOOM_MAX = 12;
+let focusId = null; // place tapped on a touch screen, described under the map
+let lastPointer = 'mouse';
+
+document.getElementById('map-info').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-act]');
+  if (!b) return;
+  if (b.dataset.act === 'close') { focusId = null; drawMap(); } else togglePick(b.dataset.id);
+});
+
+function drawMapInfo(byId, metric, spec, picks) {
+  const el = document.getElementById('map-info');
+  const r = focusId && byId.get(focusId);
+  if (!r) { el.hidden = true; el.replaceChildren(); return; }
+  el.hidden = false;
+  const x = document.createElement('button');
+  x.type = 'button';
+  x.className = 'uk-x';
+  x.dataset.act = 'close';
+  x.setAttribute('aria-label', 'Close');
+  x.textContent = '×';
+  const title = span('', r.name);
+  title.append(Object.assign(document.createElement('small'), { textContent: r.kind === 'station' ? `Weather station · ${r.nation}` : `${r.area} · ${r.nation}` }));
+  const head = span('uk-chip-h', '');
+  head.append(title, x);
+  const v = r[metric];
+  const value = span('uk-info-v', v == null ? (spec.none && r.kind === 'station' ? spec.none : metric === 'house' ? 'Too few sales for a price' : 'No reading') : `${spec.label}: ${spec.fmt(v)}`);
+  el.replaceChildren(head, value);
+  if (metric === 'house' && v != null) el.append(span('uk-info-note', HOUSE_BASIS[r.house_basis](r)));
+  const pi = picks.indexOf(r.id);
+  const add = document.createElement('button');
+  add.type = 'button';
+  add.className = 'uk-info-add';
+  add.dataset.act = 'pick';
+  add.dataset.id = r.id;
+  add.setAttribute('aria-pressed', String(pi >= 0));
+  add.disabled = pi < 0 && picks.length >= MAX_PICKS;
+  add.textContent = pi >= 0 ? 'Remove from compare' : picks.length >= MAX_PICKS ? 'Compare is full (6 places)' : 'Add to compare';
+  el.append(add);
+}
 let mapView = null; // { W, t }: last zoom transform, kept while the map width is unchanged
 
 function drawMap() {
@@ -15573,6 +15671,7 @@ function drawMap() {
   tip.className = 'uk-tip';
   tip.hidden = true;
   const showTip = (event, r) => {
+    if (event.pointerType && event.pointerType !== 'mouse') return; // touch uses the card under the map
     const v = r?.[metric];
     const head = document.createElement('div');
     head.className = 'uk-tip-h';
@@ -15587,6 +15686,16 @@ function drawMap() {
     tip.style.left = `${Math.max(0, mx + 14 + tw > el.clientWidth ? mx - tw - 14 : mx + 14)}px`;
     tip.style.top = `${Math.max(0, my - 44)}px`;
   };
+  // Mouse: click adds or removes straight away. Touch: tap shows the place's figures under the map first.
+  const choose = (id) => {
+    if (lastPointer === 'mouse') { togglePick(id); return; }
+    focusId = focusId === id ? null : id;
+    drawMap();
+  };
+  svg.node().addEventListener('pointerdown', (e) => { lastPointer = e.pointerType || 'mouse'; }, true);
+  svg.on('click', (e) => {
+    if (focusId && !e.target.closest('.uk-area, .uk-stn')) { focusId = null; drawMap(); }
+  });
   view.append('g').selectAll('path').data(areaShapes).join('path')
     .attr('class', 'uk-area')
     .attr('d', (x) => pathOf(x.rings))
@@ -15594,22 +15703,27 @@ function drawMap() {
     .style('fill', (x) => { const v = byId.get(x.id)?.[metric]; return v == null ? 'var(--color-border-line)' : ramp(v); })
     .style('stroke', 'var(--color-panel)').attr('stroke-width', 0.5)
     .attr('opacity', (x) => (nation === 'all' || byId.get(x.id)?.nation === nation ? 1 : 0.3))
-    .on('click', (_, x) => togglePick(x.id))
+    .on('click', (_, x) => choose(x.id))
     .on('pointermove', (event, x) => showTip(event, byId.get(x.id)))
     .on('pointerleave', () => { tip.hidden = true; });
   view.append('g').attr('pointer-events', 'none').selectAll('path').data(areaShapes.filter((x) => picks.includes(x.id))).join('path')
     .attr('d', (x) => pathOf(x.rings)).attr('fill', 'none')
     .style('stroke', (x) => dash.colors[picks.indexOf(x.id)]).attr('stroke-width', 2.5).attr('stroke-linejoin', 'round');
+  const focusShape = areaShapes.find((x) => x.id === focusId);
+  if (focusShape) {
+    view.append('path').attr('pointer-events', 'none').attr('d', pathOf(focusShape.rings)).attr('fill', 'none')
+      .style('stroke', 'var(--color-fg)').attr('stroke-width', 2).attr('stroke-dasharray', '4 3');
+  }
   const stations = st.data.map((r) => ({ id: r.id, cx: (Number(r.x) - x0) * s, cy: (y1 - Number(r.y)) * s }));
-  const radius = (r) => (picks.includes(r.id) ? 5.5 : 3);
+  const radius = (r) => (picks.includes(r.id) || r.id === focusId ? 5.5 : 3);
   const dots = view.append('g').selectAll('circle').data(stations).join('circle')
     .attr('class', 'uk-stn')
     .attr('cx', (r) => r.cx).attr('cy', (r) => r.cy)
     .attr('r', radius)
     .style('fill', (r) => (picks.includes(r.id) ? 'var(--color-panel)' : 'var(--color-fg)'))
-    .style('stroke', (r) => (picks.includes(r.id) ? dash.colors[picks.indexOf(r.id)] : 'var(--color-panel)'))
-    .attr('stroke-width', (r) => (picks.includes(r.id) ? 3 : 1))
-    .on('click', (_, r) => togglePick(r.id))
+    .style('stroke', (r) => (picks.includes(r.id) ? dash.colors[picks.indexOf(r.id)] : r.id === focusId ? 'var(--color-fg)' : 'var(--color-panel)'))
+    .attr('stroke-width', (r) => (picks.includes(r.id) || r.id === focusId ? 3 : 1))
+    .on('click', (_, r) => choose(r.id))
     .on('pointermove', (event, r) => showTip(event, byId.get(r.id)))
     .on('pointerleave', () => { tip.hidden = true; });
 
@@ -15655,6 +15769,7 @@ function drawMap() {
   zreset.addEventListener('click', () => svg.transition().duration(250).call(zoom.transform, d3.zoomIdentity));
   svg.call(zoom.transform, mapView && mapView.W === W ? mapView.t : d3.zoomIdentity);
   el.replaceChildren(svg.node(), controls, tip);
+  drawMapInfo(byId, metric, spec, picks);
 
   const bar = span('uk-ramp', '');
   bar.style.background = `linear-gradient(to right, ${ramp(vmin)}, ${ramp(vmax)})`;
