@@ -100,6 +100,7 @@
               <option value="summer_high">Summer high</option>
               <option value="winter_low">Winter low</option>
               <option value="frost">Air frosts</option>
+              <option value="house">Detached house price</option>
             </select>
           </label>
         </div>
@@ -144,12 +145,13 @@
             <th data-field="frost"><button type="button" class="uk-th" data-k="frost">Air frosts<small>days a year</small></button></th>
             <th data-field="day_long"><button type="button" class="uk-th" data-k="day_long">Longest day<small>21 June</small></button></th>
             <th data-field="day_short"><button type="button" class="uk-th" data-k="day_short">Shortest day<small>21 Dec</small></button></th>
+            <th data-field="house"><button type="button" class="uk-th" data-k="house">Detached house<small>typical price</small></button></th>
           </tr></thead>
           <tbody></tbody>
         </table>
       </div>
     </div>
-    <p class="uk-foot">Weather stations: readings from Met Office climate stations, so each figure is for that exact spot. Some stations have no sunshine recorder. Council areas: the Met Office HadUK-Grid 1991-2020 average over the area's 5 km squares, weighted by how much of each square lies inside it, then shifted to the period picked above using how much the nearest few stations' readings differ from their own 1991-2020 grid values. Council areas larger than about 1,000 km² (52 of them, such as North Yorkshire and Highland) are split into pieces of about that size and named after their biggest town or village. Pieces in hilly country still average mountains, glens and coast together, so the figure may not match where people actually live. Days with rain cover 1991-2020 for every place. Length of day is calculated from latitude.</p>
+    <p class="uk-foot">Weather stations: readings from Met Office climate stations, so each figure is for that exact spot. Some stations have no sunshine recorder. Council areas: the Met Office HadUK-Grid 1991-2020 average over the area's 5 km squares, weighted by how much of each square lies inside it, then shifted to the period picked above using how much the nearest few stations' readings differ from their own 1991-2020 grid values. Council areas larger than about 1,000 km² (52 of them, such as North Yorkshire and Highland) are split into pieces of about that size and named after their biggest town or village. Pieces in hilly country still average mountains, glens and coast together, so the figure may not match where people actually live. Days with rain cover 1991-2020 for every place. Length of day is calculated from latitude. Detached house price: in England and Wales, the median of all detached house sales on the open market from September 2023 to August 2026 (HM Land Registry), placed in each area by postcode; areas with fewer than 30 sales are left blank. Scotland has only a council-wide figure (UK House Price Index), so every piece of a split council shows the same price. Northern Ireland publishes no detached price by council, so its figures are estimates: the Northern Ireland detached price scaled by each council's overall price level. Both are adjusted to match how England and Wales medians compare with the same index. No source records bedrooms, so this covers detached houses of every size.</p>
   </section>
 </div>
 
@@ -215,9 +217,10 @@ dash.calc('climate', {
 
 dash.calc('summary', {
   title: 'Yearly figures by place',
-  description: 'Summer high: mean Jun-Aug daily max. Winter high and low: mean Dec-Feb daily max and min. Rainfall, rain days (1 mm or more, 1991-2020), sunshine and air frosts: sum of the 12 monthly averages. Longest and shortest day from latitude on 21 June and 21 December.',
-  inputs: ['climate', 'stations', 'areas'],
-  fn: (climate, stations, areas) => {
+  description: 'Summer high: mean Jun-Aug daily max. Winter high and low: mean Dec-Feb daily max and min. Rainfall, rain days (1 mm or more, 1991-2020), sunshine and air frosts: sum of the 12 monthly averages. Longest and shortest day from latitude on 21 June and 21 December. House: typical detached house price (areas only), with its basis and number of sales.',
+  inputs: ['climate', 'stations', 'areas', 'houses'],
+  fn: (climate, stations, areas, houses) => {
+    const house = new Map(houses.map((h) => [h.id, h]));
     const rad = Math.PI / 180;
     const daylight = (lat, n) => {
       const dec = 23.44 * rad * Math.sin(2 * Math.PI * (284 + n) / 365);
@@ -242,6 +245,9 @@ dash.calc('summary', {
         winter_low: mean([12, 1, 2].map((n) => at(n, 'tmin'))),
         rain: sum(all('rain')), raindays: sum(all('raindays')), sun: sum(all('sun')), frost: sum(all('af')),
         day_long: daylight(Number(p.lat), 172), day_short: daylight(Number(p.lat), 355),
+        house: house.get(p.id)?.price ? Number(house.get(p.id).price) : null,
+        house_basis: house.get(p.id)?.basis || null,
+        house_sales: house.get(p.id)?.sales ? Number(house.get(p.id).sales) : null,
       };
     }));
   },
@@ -253,7 +259,13 @@ const MAX_PICKS = 6;
 const f1 = d3.format('.1f');
 const f0 = d3.format(',.0f');
 const hm = (h) => { const m = Math.round(h * 60); return `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, '0')}m`; };
-const FMT = { summer_high: f1, winter_high: f1, winter_low: f1, rain: f0, raindays: f0, sun: f0, frost: f0, day_long: hm, day_short: hm };
+const money = (v) => (v >= 995000 ? `£${d3.format('.2~f')(v / 1e6)}m` : `£${Math.round(v / 1000)}k`);
+const FMT = { summer_high: f1, winter_high: f1, winter_low: f1, rain: f0, raindays: f0, sun: f0, frost: f0, day_long: hm, day_short: hm, house: money };
+const HOUSE_BASIS = {
+  sales: (r) => `median of ${f0(r.house_sales)} sales, Sep 2023 to Aug 2026`,
+  hpi: () => 'council-wide figure, UK House Price Index',
+  estimate: () => 'estimate from council price levels',
+};
 const METRICS = {
   sun: { label: 'Sunshine', fmt: (v) => `${f0(v)} hours a year`, none: 'No sunshine recorder' },
   rain: { label: 'Rainfall', fmt: (v) => `${f0(v)} mm a year` },
@@ -261,6 +273,7 @@ const METRICS = {
   summer_high: { label: 'Summer high', fmt: (v) => `${f1(v)}°C` },
   winter_low: { label: 'Winter low', fmt: (v) => `${f1(v)}°C` },
   frost: { label: 'Air frosts', fmt: (v) => `${f0(v)} days a year` },
+  house: { label: 'Detached house price', fmt: money, log: true, clip: [0.02, 0.98], none: 'No house prices for stations' },
 };
 let sortKey = 'sun';
 let sortDir = -1;
@@ -422,9 +435,12 @@ function drawTable() {
     loc.append(span('', r.name), span('', `${r.area} · ${r.nation}`));
     tdName.append(loc);
     tr.append(tdPick, tdName);
-    for (const k of ['summer_high', 'winter_high', 'winter_low', 'rain', 'raindays', 'sun', 'frost', 'day_long', 'day_short']) {
+    for (const k of ['summer_high', 'winter_high', 'winter_low', 'rain', 'raindays', 'sun', 'frost', 'day_long', 'day_short', 'house']) {
       const td = document.createElement('td');
-      if (r[k] == null) td.append(span('uk-na', k === 'sun' ? 'no recorder' : 'n/a'));
+      if (r[k] == null) td.append(span('uk-na', k === 'sun' ? 'no recorder' : k === 'house' && r.kind === 'area' ? 'too few sales' : 'n/a'));
+      else if (k === 'house' && r.house_basis !== 'sales') {
+        td.append(span('', `${r.house_basis === 'estimate' ? '~' : ''}${money(r.house)}`, { title: HOUSE_BASIS[r.house_basis](r) }));
+      }
       else if (k === 'rain' || k === 'sun') {
         const bar = span('uk-bar', '');
         const i = document.createElement('i');
@@ -570,9 +586,12 @@ function drawMap() {
   const pathOf = (rings) => rings.map((r) => 'M' + r.map(([x, y]) => `${((x - x0) * s).toFixed(1)},${((y1 - y) * s).toFixed(1)}`).join('L') + 'Z').join('');
 
   const areaVals = rows.filter((r) => r.kind === 'area').map((r) => r[metric]).filter((v) => v != null);
-  const [vmin, vmax] = d3.extent(areaVals);
+  // A few London boroughs dwarf every other house price, so that ramp runs from the 2nd to 98th percentile.
+  const sortedVals = areaVals.slice().sort(d3.ascending);
+  const [vmin, vmax] = spec.clip ? spec.clip.map((q) => d3.quantileSorted(sortedVals, q)) : d3.extent(areaVals);
   const lowC = resolveColor('var(--color-panel)'), highC = resolveColor(dash.colors[0]);
-  const ramp = (v) => d3.interpolateRgb(lowC, highC)(0.12 + 0.88 * (vmax > vmin ? Math.max(0, Math.min(1, (v - vmin) / (vmax - vmin))) : 1));
+  const tf = spec.log ? Math.log : (v) => v;
+  const ramp = (v) => d3.interpolateRgb(lowC, highC)(0.12 + 0.88 * (vmax > vmin ? Math.max(0, Math.min(1, (tf(v) - tf(vmin)) / (tf(vmax) - tf(vmin)))) : 1));
 
   const svg = d3.create('svg').attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', `Map of UK council areas shaded by ${spec.label.toLowerCase()}`);
   const view = svg.append('g');
@@ -586,8 +605,9 @@ function drawMap() {
     head.className = 'uk-tip-h';
     head.textContent = r ? `${r.name}${r.kind === 'station' ? ' · station' : ''}` : '';
     const line = document.createElement('div');
-    line.textContent = v == null ? (spec.none && r?.kind === 'station' ? spec.none : 'No reading') : `${spec.label}: ${spec.fmt(v)}`;
+    line.textContent = v == null ? (spec.none && r?.kind === 'station' ? spec.none : metric === 'house' ? 'Too few sales' : 'No reading') : `${spec.label}: ${spec.fmt(v)}`;
     tip.replaceChildren(head, line);
+    if (metric === 'house' && v != null) tip.append(span('uk-tip-h', HOUSE_BASIS[r.house_basis](r)));
     tip.hidden = false;
     const [mx, my] = d3.pointer(event, el);
     const tw = tip.offsetWidth;
@@ -665,7 +685,7 @@ function drawMap() {
 
   const bar = span('uk-ramp', '');
   bar.style.background = `linear-gradient(to right, ${ramp(vmin)}, ${ramp(vmax)})`;
-  legend.replaceChildren(span('', spec.fmt(vmin)), bar, span('', spec.fmt(vmax)));
+  legend.replaceChildren(span('', `${spec.fmt(vmin)}${spec.clip ? ' or less' : ''}`), bar, span('', `${spec.fmt(vmax)}${spec.clip ? ' or more' : ''}`));
 }
 
 dash.onData(() => {

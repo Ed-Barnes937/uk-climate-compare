@@ -22,11 +22,13 @@ python3 build.py
 - **Council areas:** the HadUK-Grid 1991-2020 average over the area's 5 km squares, weighted by overlap, shifted to the chosen period by the inverse-distance-weighted difference between the nearest four stations' recent readings and their own 1991-2020 grid values.
 - Councils over about 1,000 km² are split into pieces of about that size (k-means centres, Voronoi cells clipped to the council) and named after their biggest town or village.
 - Days with rain are 1991-2020 grid values everywhere. Day length is calculated from latitude.
+- Detached house price (`scripts/house.py`): England and Wales use the median of open-market detached sales over the latest 36 months of Land Registry Price Paid Data, placed in each area by postcode (blank under 30 sales). Scotland uses the council's UK HPI detached price; Northern Ireland estimates it from NISRA's NI detached price scaled by each council's overall price level. Both are scaled by the typical sales-median to HPI ratio across English and Welsh councils. No source records bedrooms.
 
 ## Sources
 
 - Met Office historic station data and HadUK-Grid v1.3.2 (via CEDA), © Crown copyright, [Open Government Licence v3](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
 - Council boundaries: ONS Open Geography Portal, local authority districts May 2026. Contains OS data © Crown copyright and database right 2026.
+- House prices: HM Land Registry Price Paid Data and UK House Price Index (OGL v3), NISRA Northern Ireland House Price Index, Code-Point Open postcodes (contains OS data © Crown copyright 2026).
 - Place names © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright) (ODbL).
 - Ireland and Isle of Man outlines: Natural Earth.
 - [d3](https://d3js.org) v7.9.0 (ISC licence) in `vendor/`.

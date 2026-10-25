@@ -9,6 +9,7 @@ DATASETS = {
     'areas': 'uk_areas.csv',
     'areagrid': 'uk_area_grid_1991_2020.csv',
     'boundaries': 'uk_boundaries.json',
+    'houses': 'uk_area_houses.csv',
 }
 
 
@@ -33,6 +34,7 @@ FOOTER = """<footer class="site-foot">
   <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3</a>.
   Council area boundaries from the ONS Open Geography Portal; contains OS data &copy; Crown copyright and database right 2026.
   Town and village names &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL).
+  House prices: HM Land Registry Price Paid Data and UK House Price Index (OGL v3); Code-Point Open postcodes, contains OS data &copy; Crown copyright 2026; NISRA Northern Ireland House Price Index.
   Ireland and Isle of Man outlines from Natural Earth. Charts drawn with <a href="https://d3js.org">d3</a>.</p>
 </footer>"""
 

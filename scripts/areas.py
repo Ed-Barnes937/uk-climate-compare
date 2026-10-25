@@ -148,3 +148,7 @@ with open('met/uk_area_grid_1991_2020.csv', 'w', newline='') as f:
     w = csv.DictWriter(f, fieldnames=['id','month'] + list(VARS)); w.writeheader(); w.writerows(rows)
 json.dump(bounds + [dict(c, context=True) for c in ctx], open('met/uk_boundaries.json', 'w'), separators=(',', ':'))
 print('areas', len(areas), 'squares min/median/max', min(counts), int(np.median(counts)), max(counts), 'tiny', sum(1 for c in counts if c<=2))
+
+# full-resolution shapes (BNG metres) for later point-in-area lookups
+import pickle
+pickle.dump([(a['id'], s.wkb) for a, s in zip(areas, shapes)], open('grid/area_shapes.pkl', 'wb'))
