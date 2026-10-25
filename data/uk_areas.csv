@@ -1,0 +1,501 @@
+id,name,nation,lat,x,y,parent,squares
+E06000001,Hartlepool,England,54.6761,447.2,531.5,,3.8
+E06000002,Middlesbrough,England,54.5447,451.1,516.9,,2.2
+E06000003,Redcar and Cleveland,England,54.5675,464.3,519.6,,9.9
+E06000004,Stockton-on-Tees,England,54.5569,444.9,518.2,,8.1
+E06000005,Darlington,England,54.5353,428.0,515.6,,7.9
+E06000006,Halton,England,53.3342,354.2,382.1,,3.2
+E06000007,Warrington,England,53.3916,362.7,388.5,,7.1
+E06000008,Blackburn with Darwen,England,53.7008,369.5,422.8,,5.6
+E06000009,Blackpool,England,53.8216,332.8,436.6,,1.3
+E06000010,"Kingston upon Hull, City of",England,53.7692,511.9,431.7,,2.9
+E06000011-1,East Riding of Yorkshire - Driffield area,England,54.0054,505.1,457.8,East Riding of Yorkshire,33.7
+E06000011-2,East Riding of Yorkshire - Hedon area,England,53.7643,521.3,431.3,East Riding of Yorkshire,21.9
+E06000011-3,East Riding of Yorkshire - Market Weighton area,England,53.8232,482.4,437.0,East Riding of Yorkshire,40.6
+E06000012,North East Lincolnshire,England,53.5232,523.5,404.6,,7.5
+E06000013,North Lincolnshire,England,53.5864,497.8,411.0,,34.0
+E06000014,York,England,53.9658,460.9,452.6,,11.0
+E06000015,Derby,England,52.9146,435.6,335.4,,3.1
+E06000016,Leicester,England,52.6359,458.9,304.6,,2.9
+E06000017,Rutland,England,52.6676,493.0,308.7,,15.6
+E06000018,Nottingham,England,52.9542,456.1,340.0,,3.0
+E06000019-1,"Herefordshire, County of - Bromyard area",England,52.2428,348.8,260.8,"Herefordshire, County of",29.2
+E06000019-2,"Herefordshire, County of - Kington area",England,52.0652,335.6,241.2,"Herefordshire, County of",25.6
+E06000019-3,"Herefordshire, County of - Hereford area",England,52.0087,360.0,234.6,"Herefordshire, County of",32.5
+E06000020,Telford and Wrekin,England,52.7142,367.0,313.1,,11.7
+E06000021,Stoke-on-Trent,England,53.017,389.4,346.6,,3.7
+E06000022,Bath and North East Somerset,England,51.3561,366.2,162.0,,13.9
+E06000023,"Bristol, City of",England,51.4711,360.0,174.8,,4.4
+E06000024,North Somerset,England,51.3971,347.6,166.7,,14.6
+E06000025,South Gloucestershire,England,51.5467,367.6,183.2,,19.9
+E06000026,Plymouth,England,50.405,249.9,58.3,,3.3
+E06000027,Torbay,England,50.4709,289.7,64.6,,2.6
+E06000030,Swindon,England,51.5776,418.6,186.6,,9.1
+E06000031,Peterborough,England,52.5921,517.4,300.8,,13.7
+E06000032,Luton,England,51.891,508.6,222.6,,1.8
+E06000033,Southend-on-Sea,England,51.5492,587.8,186.8,,1.7
+E06000034,Thurrock,England,51.51,562.1,181.6,,6.5
+E06000035,Medway,England,51.4477,578.2,175.2,,7.7
+E06000036,Bracknell Forest,England,51.4113,488.2,168.8,,4.3
+E06000037,West Berkshire,England,51.4456,450.6,172.1,,28.0
+E06000038,Reading,England,51.453,470.2,173.2,,1.6
+E06000039,Slough,England,51.5035,498.9,179.2,,1.3
+E06000040,Windsor and Maidenhead,England,51.4803,492.1,176.5,,7.9
+E06000041,Wokingham,England,51.423,476.6,169.9,,7.2
+E06000042,Milton Keynes,England,52.0724,486.4,242.3,,12.4
+E06000043,Brighton and Hove,England,50.8465,530.3,106.8,,3.3
+E06000044,Portsmouth,England,50.808,465.6,101.4,,1.6
+E06000045,Southampton,England,50.9212,442.3,113.7,,2.0
+E06000046,Isle of Wight,England,50.6713,447.2,85.9,,14.9
+E06000047-1,County Durham - Durham area,England,54.7516,426.6,539.7,County Durham,37.7
+E06000047-2,County Durham - Stanhope area,England,54.7297,394.0,537.2,County Durham,27.0
+E06000047-3,County Durham - Barnard Castle area,England,54.5706,403.5,519.5,County Durham,24.5
+E06000049-1,Cheshire East - Knutsford area,England,53.2612,384.7,373.8,Cheshire East,26.8
+E06000049-2,Cheshire East - Crewe area,England,53.0726,366.1,352.9,Cheshire East,19.9
+E06000050,Cheshire West and Chester,England,53.1633,353.1,363.1,,36.8
+E06000051-1,Shropshire - Shrewsbury area,England,52.8383,347.5,327.0,Shropshire,46.8
+E06000051-2,Shropshire - Clun area,England,52.5215,335.6,291.9,Shropshire,33.5
+E06000051-3,Shropshire - Bridgnorth area,England,52.5931,368.3,299.6,Shropshire,24.7
+E06000051-4,Shropshire - Ludlow area,England,52.4266,358.9,281.1,Shropshire,22.4
+E06000052-1,Cornwall - Bude area,England,50.5908,225.2,79.7,Cornwall,54.0
+E06000052-2,Cornwall - St. Austell area,England,50.4194,199.8,61.5,Cornwall,42.0
+E06000052-3,Cornwall - Penzance area,England,50.1387,148.7,32.4,Cornwall,13.1
+E06000052-4,Cornwall - Truro area,England,50.1851,175.1,36.4,Cornwall,31.2
+E06000053,Isles of Scilly,England,49.9233,91.3,11.4,,0.2
+E06000054-1,Wiltshire - Chippenham area,England,51.5079,396.5,178.8,Wiltshire,35.6
+E06000054-2,Wiltshire - Salisbury area,England,51.0796,410.6,131.2,Wiltshire,30.1
+E06000054-3,Wiltshire - Marlborough area,England,51.3557,419.0,161.9,Wiltshire,32.6
+E06000054-4,Wiltshire - Warminster area,England,51.2081,390.7,145.4,Wiltshire,32.0
+E06000055,Bedford,England,52.1963,505.7,256.5,,19.0
+E06000056,Central Bedfordshire,England,51.999,504.6,234.5,,28.4
+E06000057-1,Northumberland - Alnwick area,England,55.4217,408.7,614.2,Northumberland,36.8
+E06000057-2,Northumberland - Hexham area,England,55.0013,399.5,567.4,Northumberland,29.7
+E06000057-3,Northumberland - Morpeth area,England,55.1874,416.2,588.1,Northumberland,32.8
+E06000057-4,Northumberland - Haltwhistle area,England,54.9341,376.7,560.0,Northumberland,29.3
+E06000057-5,Northumberland - Rochester area,England,55.2302,378.1,592.9,Northumberland,42.9
+E06000057-6,Northumberland - Berwick-upon-Tweed area,England,55.6179,397.6,636.0,Northumberland,29.1
+E06000058,"Bournemouth, Christchurch and Poole",England,50.7461,410.8,94.1,,6.4
+E06000059-1,Dorset - Sherborne area,England,50.921,376.3,113.6,Dorset,26.6
+E06000059-2,Dorset - Verwood area,England,50.7765,394.1,97.4,Dorset,38.2
+E06000059-3,Dorset - Weymouth area,England,50.7548,356.8,95.2,Dorset,34.5
+E06000060-1,Buckinghamshire - Winslow area,England,51.8975,476.1,222.7,Buckinghamshire,34.8
+E06000060-2,Buckinghamshire - High Wycombe area,England,51.6463,489.4,195.0,Buckinghamshire,28.1
+E06000061,North Northamptonshire,England,52.4255,493.6,281.7,,39.7
+E06000062-1,West Northamptonshire - Northampton area,England,52.3102,470.0,268.5,West Northamptonshire,29.2
+E06000062-2,West Northamptonshire - Towcester area,England,52.1244,461.3,247.7,West Northamptonshire,25.7
+E06000063-1,Cumberland - Carlisle area,England,54.9882,350.9,566.2,Cumberland,35.3
+E06000063-2,Cumberland - Whitehaven area,England,54.5944,314.5,522.9,Cumberland,34.6
+E06000063-3,Cumberland - Wigton area,England,54.8201,325.3,547.9,Cumberland,29.5
+E06000063-4,Cumberland - Millom area,England,54.3769,313.6,498.7,Cumberland,21.3
+E06000064-1,Westmorland and Furness - Alston area,England,54.6933,367.3,533.3,Westmorland and Furness,32.0
+E06000064-2,Westmorland and Furness - Penrith area,England,54.623,344.6,525.7,Westmorland and Furness,34.4
+E06000064-3,Westmorland and Furness - Sedbergh area,England,54.3938,367.5,499.9,Westmorland and Furness,42.5
+E06000064-4,Westmorland and Furness - Barrow-in-Furness area,England,54.2909,336.0,488.8,Westmorland and Furness,42.3
+E06000065-1,North Yorkshire - Bedale area,England,54.3566,439.7,495.8,North Yorkshire,40.3
+E06000065-2,North Yorkshire - Settle area,England,54.1655,381.9,474.5,North Yorkshire,33.4
+E06000065-3,North Yorkshire - Tadcaster area,England,53.7924,456.8,433.2,North Yorkshire,25.2
+E06000065-4,North Yorkshire - Grassington area,England,54.0393,403.9,460.4,North Yorkshire,34.5
+E06000065-5,North Yorkshire - Whitby area,England,54.404,475.1,501.6,North Yorkshire,34.8
+E06000065-6,North Yorkshire - Leyburn area,England,54.3565,405.9,495.7,North Yorkshire,44.2
+E06000065-7,North Yorkshire - Ripon area,England,54.0675,433.3,463.6,North Yorkshire,40.4
+E06000065-8,North Yorkshire - Scarborough area,England,54.2132,493.8,480.7,North Yorkshire,33.3
+E06000065-9,North Yorkshire - Kirkbymoorside area,England,54.1454,464.5,472.6,North Yorkshire,35.8
+E06000066-1,Somerset - Watchet area,England,51.1194,292.8,136.7,Somerset,26.8
+E06000066-2,Somerset - Wells area,England,51.1666,362.0,141.0,Somerset,45.0
+E06000066-3,Somerset - Taunton area,England,51.1113,325.0,135.2,Somerset,36.1
+E06000066-4,Somerset - Yeovil area,England,50.9634,341.3,118.5,Somerset,29.9
+E07000008,Cambridge,England,52.2002,545.4,257.9,,1.6
+E07000009,East Cambridgeshire,England,52.3579,555.6,275.8,,26.3
+E07000010,Fenland,England,52.5354,536.4,295.0,,21.9
+E07000011,Huntingdonshire,England,52.3531,521.0,274.3,,36.5
+E07000012,South Cambridgeshire,England,52.108,543.3,247.6,,35.9
+E07000032,Amber Valley,England,53.0288,436.2,348.1,,10.7
+E07000033,Bolsover,England,53.2387,448.7,371.5,,6.4
+E07000034,Chesterfield,England,53.2557,440.0,373.4,,2.6
+E07000035,Derbyshire Dales,England,53.1233,419.7,358.5,,31.8
+E07000036,Erewash,England,52.9382,443.7,338.1,,4.4
+E07000037,High Peak,England,53.3856,410.5,387.7,,21.6
+E07000038,North East Derbyshire,England,53.1624,437.4,363.0,,11.0
+E07000039,South Derbyshire,England,52.8249,431.4,325.4,,13.5
+E07000040,East Devon,England,50.7576,313.8,96.1,,32.7
+E07000041,Exeter,England,50.7178,293.2,92.0,,1.8
+E07000042,Mid Devon,England,50.8688,288.1,108.9,,36.3
+E07000043-1,North Devon - Barnstaple area,England,51.1279,259.7,138.4,North Devon,23.9
+E07000043-2,North Devon - South Molton area,England,50.9932,274.5,123.1,North Devon,19.1
+E07000044,South Hams,England,50.372,270.7,54.0,,35.2
+E07000045,Teignbridge,England,50.6098,283.1,80.2,,26.9
+E07000046,Torridge,England,50.9074,244.2,114.3,,38.8
+E07000047-1,West Devon - Okehampton area,England,50.7432,259.2,95.6,West Devon,23.1
+E07000047-2,West Devon - Tavistock area,England,50.5712,251.9,76.7,West Devon,23.5
+E07000061,Eastbourne,England,50.7739,559.3,99.6,,1.8
+E07000062,Hastings,England,50.8672,581.5,110.7,,1.0
+E07000063,Lewes,England,50.8334,541.5,105.7,,11.7
+E07000064,Rother,England,50.9487,578.7,119.7,,20.6
+E07000065,Wealden,England,50.9332,555.0,117.2,,33.5
+E07000066,Basildon,England,51.5904,571.5,190.8,,4.5
+E07000067,Braintree,England,51.9163,577.3,227.3,,24.5
+E07000068,Brentwood,England,51.6411,558.6,196.1,,6.1
+E07000069,Castle Point,England,51.5616,579.5,187.9,,1.7
+E07000070,Chelmsford,England,51.735,572.1,207.0,,13.7
+E07000071,Colchester,England,51.877,596.9,223.7,,13.2
+E07000072,Epping Forest,England,51.7128,548.9,203.8,,13.6
+E07000073,Harlow,England,51.7661,545.3,209.6,,1.2
+E07000074,Maldon,England,51.7746,591.4,212.1,,14.1
+E07000075,Rochford,England,51.5909,586.0,191.4,,6.4
+E07000076,Tendring,England,51.8567,614.2,222.1,,13.2
+E07000077,Uttlesford,England,51.9359,557.8,228.9,,25.8
+E07000078,Cheltenham,England,51.8986,394.9,222.2,,1.9
+E07000079-1,Cotswold - Chipping Campden area,England,51.9312,415.0,225.9,Cotswold,20.4
+E07000079-2,Cotswold - Tetbury area,England,51.7273,401.6,203.2,Cotswold,26.3
+E07000080,Forest of Dean,England,51.8125,367.2,212.8,,21.0
+E07000081,Gloucester,England,51.8464,384.1,216.4,,1.6
+E07000082,Stroud,England,51.72,378.8,202.4,,18.4
+E07000083,Tewkesbury,England,51.9349,386.3,226.3,,16.5
+E07000084,Basingstoke and Deane,England,51.2594,454.5,151.4,,25.4
+E07000085,East Hampshire,England,51.0578,474.4,129.2,,20.6
+E07000086,Eastleigh,England,50.9488,447.2,116.8,,3.1
+E07000087,Fareham,England,50.8539,453.8,106.3,,2.9
+E07000088,Gosport,England,50.8064,458.8,101.1,,0.9
+E07000089,Hart,England,51.282,478.0,154.2,,8.5
+E07000090,Havant,England,50.8723,470.2,108.6,,2.3
+E07000091,New Forest,England,50.8575,428.7,106.5,,30.1
+E07000092,Rushmoor,England,51.2782,486.0,153.9,,1.6
+E07000093,Test Valley,England,51.1342,434.9,137.3,,25.0
+E07000094,Winchester,England,51.03,453.1,125.9,,26.4
+E07000095,Broxbourne,England,51.7208,534.7,204.3,,2.1
+E07000096,Dacorum,England,51.7684,500.1,208.7,,8.6
+E07000098,Hertsmere,England,51.6802,519.8,199.4,,4.0
+E07000099,North Hertfordshire,England,51.9573,522.2,230.2,,14.9
+E07000102,Three Rivers,England,51.6563,507.3,196.4,,3.6
+E07000103,Watford,England,51.6717,510.4,198.2,,0.9
+E07000105,Ashford,England,51.131,597.6,140.6,,23.3
+E07000106,Canterbury,England,51.281,616.0,158.1,,12.3
+E07000107,Dartford,England,51.4337,556.2,172.9,,2.9
+E07000108,Dover,England,51.2118,629.0,150.9,,12.3
+E07000109,Gravesham,England,51.3965,567.0,169.1,,3.8
+E07000110,Maidstone,England,51.2357,580.5,151.7,,15.7
+E07000111,Sevenoaks,England,51.2756,552.8,155.2,,14.8
+E07000112,Folkestone and Hythe,England,51.0721,610.3,134.6,,14.2
+E07000113,Swale,England,51.3225,593.6,161.8,,14.8
+E07000114,Thanet,England,51.3525,631.8,166.8,,3.9
+E07000115,Tonbridge and Malling,England,51.2606,564.0,153.9,,9.7
+E07000116,Tunbridge Wells,England,51.1025,573.1,136.6,,13.1
+E07000117,Burnley,England,53.774,384.9,430.9,,4.5
+E07000118,Chorley,England,53.6724,359.2,419.7,,8.1
+E07000119,Fylde,England,53.7971,339.6,433.8,,6.5
+E07000120,Hyndburn,England,53.7564,374.4,429.0,,2.9
+E07000121,Lancaster,England,54.079,356.9,465.0,,22.7
+E07000122,Pendle,England,53.8863,387.6,443.4,,6.7
+E07000123,Preston,England,53.822,352.8,436.4,,5.7
+E07000124,Ribble Valley,England,53.9245,372.7,447.7,,23.3
+E07000125,Rossendale,England,53.6847,382.8,421.0,,5.5
+E07000126,South Ribble,England,53.7267,352.0,425.8,,4.6
+E07000127,West Lancashire,England,53.6128,342.6,413.3,,13.9
+E07000128,Wyre,England,53.8999,347.3,445.2,,11.2
+E07000129,Blaby,England,52.5771,454.4,298.0,,5.2
+E07000130,Charnwood,England,52.7399,458.4,316.2,,11.1
+E07000131,Harborough,England,52.5376,474.6,293.9,,23.8
+E07000132,Hinckley and Bosworth,England,52.6088,439.5,301.4,,12.0
+E07000133,Melton,England,52.8032,477.3,323.5,,19.4
+E07000134,North West Leicestershire,England,52.7425,439.1,316.3,,11.1
+E07000135,Oadby and Wigston,England,52.5887,461.5,299.4,,0.9
+E07000136,Boston,England,52.9779,526.9,344.0,,14.2
+E07000137-1,East Lindsey - Mablethorpe area,England,53.3609,532.8,386.7,East Lindsey,33.3
+E07000137-2,East Lindsey - Skegness area,England,53.1529,537.1,363.7,East Lindsey,37.1
+E07000138,Lincoln,England,53.2192,496.3,370.1,,1.4
+E07000139,North Kesteven,England,53.0806,502.1,354.8,,36.8
+E07000140,South Holland,England,52.7876,532.9,322.9,,30.2
+E07000141,South Kesteven,England,52.8488,501.4,329.0,,37.7
+E07000142-1,West Lindsey - Caistor area,England,53.459,511.2,397.1,West Lindsey,18.2
+E07000142-2,West Lindsey - Gainsborough area,England,53.3503,494.9,384.7,West Lindsey,28.1
+E07000143-1,Breckland - Dereham area,England,52.6841,592.4,313.4,Breckland,26.1
+E07000143-2,Breckland - Watton area,England,52.4923,592.3,292.0,Breckland,25.9
+E07000144,Broadland,England,52.6962,619.9,315.9,,22.1
+E07000145,Great Yarmouth,England,52.6844,646.8,315.9,,6.9
+E07000146-1,King's Lynn and West Norfolk - Hunstanton area,England,52.8404,574.1,330.1,King's Lynn and West Norfolk,25.9
+E07000146-2,King's Lynn and West Norfolk - King's Lynn area,England,52.6152,561.7,304.6,King's Lynn and West Norfolk,31.4
+E07000147,North Norfolk,England,52.8339,611.0,330.9,,38.2
+E07000148,Norwich,England,52.6401,622.4,309.8,,1.6
+E07000149,South Norfolk,England,52.5122,629.0,295.8,,36.3
+E07000170,Ashfield,England,53.0975,450.0,355.8,,4.4
+E07000171,Bassetlaw,England,53.356,468.1,384.8,,25.6
+E07000172,Broxtowe,England,52.9721,449.8,341.9,,3.2
+E07000173,Gedling,England,53.0243,459.2,347.8,,4.8
+E07000174,Mansfield,England,53.167,455.0,363.6,,3.1
+E07000175,Newark and Sherwood,England,53.1096,470.6,357.5,,26.0
+E07000176,Rushcliffe,England,52.9124,466.6,335.5,,16.4
+E07000177,Cherwell,England,51.8872,449.3,221.2,,23.6
+E07000178,Oxford,England,51.7536,452.3,206.4,,1.8
+E07000179,South Oxfordshire,England,51.6229,463.9,192.0,,27.1
+E07000180,Vale of White Horse,England,51.6544,435.7,195.2,,23.3
+E07000181,West Oxfordshire,England,51.8399,434.3,215.8,,28.6
+E07000192,Cannock Chase,England,52.7016,401.3,311.6,,3.2
+E07000193,East Staffordshire,England,52.8365,412.6,326.6,,15.8
+E07000194,Lichfield,England,52.6961,416.3,311.0,,13.1
+E07000195,Newcastle-under-Lyme,England,53.0035,378.2,345.2,,8.4
+E07000196,South Staffordshire,England,52.6969,389.6,311.0,,16.4
+E07000197,Stafford,England,52.8479,389.0,327.8,,24.0
+E07000198,Staffordshire Moorlands,England,53.0693,400.5,352.4,,23.1
+E07000199,Tamworth,England,52.6203,421.5,302.5,,1.2
+E07000200,Babergh,England,52.0645,600.0,244.7,,23.9
+E07000202,Ipswich,England,52.0559,617.2,244.5,,1.6
+E07000203,Mid Suffolk,England,52.2185,611.6,262.3,,34.9
+E07000207,Elmbridge,England,51.361,511.9,163.7,,3.8
+E07000208,Epsom and Ewell,England,51.3395,521.2,161.5,,1.4
+E07000209,Guildford,England,51.2537,500.4,151.5,,10.9
+E07000210,Mole Valley,England,51.2275,518.4,149.0,,10.2
+E07000211,Reigate and Banstead,England,51.2585,525.8,152.6,,5.2
+E07000212,Runnymede,England,51.3927,501.8,167.0,,3.2
+E07000213,Spelthorne,England,51.4155,507.0,169.6,,2.1
+E07000214,Surrey Heath,England,51.3361,491.4,160.5,,3.9
+E07000215,Tandridge,England,51.2358,536.4,150.3,,9.9
+E07000216,Waverley,England,51.1569,496.4,140.6,,13.7
+E07000217,Woking,England,51.3084,499.1,157.5,,2.5
+E07000218,North Warwickshire,England,52.5649,425.6,296.4,,11.4
+E07000219,Nuneaton and Bedworth,England,52.5009,435.4,289.4,,3.1
+E07000220,Rugby,England,52.3823,446.5,276.2,,14.0
+E07000221,Stratford-on-Avon,England,52.1615,425.0,251.5,,39.2
+E07000222,Warwick,England,52.3014,428.5,267.1,,11.3
+E07000223,Adur,England,50.8457,518.1,106.5,,1.5
+E07000224,Arun,England,50.8432,495.1,105.7,,8.9
+E07000225,Chichester,England,50.9418,490.3,116.6,,31.4
+E07000226,Crawley,England,51.1236,526.4,137.6,,1.8
+E07000227,Horsham,England,51.0027,513.7,123.8,,21.2
+E07000228,Mid Sussex,England,51.0595,533.1,130.6,,13.5
+E07000229,Worthing,England,50.8331,512.7,104.9,,1.2
+E07000234,Bromsgrove,England,52.3617,399.8,273.7,,8.7
+E07000235,Malvern Hills,England,52.1676,377.5,252.2,,23.2
+E07000236,Redditch,England,52.2854,403.7,265.3,,2.2
+E07000237,Worcester,England,52.1948,385.7,255.2,,1.4
+E07000238,Wychavon,England,52.1289,399.0,247.8,,26.4
+E07000239,Wyre Forest,England,52.3853,384.1,276.4,,7.8
+E07000240,St Albans,England,51.7736,514.6,209.6,,6.4
+E07000241,Welwyn Hatfield,England,51.7609,525.3,208.5,,5.2
+E07000242,East Hertfordshire,England,51.8649,538.0,220.4,,19.1
+E07000243,Stevenage,England,51.9054,524.6,224.5,,1.1
+E07000244-1,East Suffolk - Lowestoft area,England,52.3741,642.3,281.1,East Suffolk,23.2
+E07000244-2,East Suffolk - Felixstowe area,England,52.1272,631.6,253.1,East Suffolk,27.3
+E07000245-1,West Suffolk - Bury St Edmunds area,England,52.3497,581.2,275.7,West Suffolk,24.2
+E07000245-2,West Suffolk - Haverhill area,England,52.1777,575.9,256.4,West Suffolk,17.1
+E08000001,Bolton,England,53.5845,368.4,409.9,,5.5
+E08000002,Bury,England,53.5931,379.7,410.8,,4.0
+E08000003,Manchester,England,53.4701,384.6,397.1,,4.5
+E08000004,Oldham,England,53.5577,396.6,406.8,,5.8
+E08000005,Rochdale,England,53.6074,390.3,412.3,,6.2
+E08000006,Salford,England,53.4793,374.6,398.1,,3.9
+E08000007,Stockport,England,53.3911,391.8,388.3,,5.0
+E08000008,Tameside,England,53.4787,395.0,398.0,,4.1
+E08000009,Trafford,England,53.4167,375.8,391.2,,4.3
+E08000010,Wigan,England,53.5144,362.1,402.1,,7.5
+E08000011,Knowsley,England,53.4379,344.8,393.8,,3.5
+E08000012,Liverpool,England,53.4083,339.4,390.6,,4.5
+E08000013,St. Helens,England,53.4586,353.4,396.0,,5.4
+E08000014,Sefton,England,53.4821,334.3,398.8,,5.7
+E08000015,Wirral,England,53.3748,329.1,387.0,,6.2
+E08000017,Doncaster,England,53.5269,459.2,403.7,,22.7
+E08000018,Rotherham,England,53.3955,447.5,389.0,,11.6
+E08000021,Newcastle upon Tyne,England,55.021,422.3,569.7,,4.4
+E08000022,North Tyneside,England,55.029,431.5,570.6,,3.2
+E08000023,South Tyneside,England,54.9699,435.5,564.1,,2.6
+E08000024,Sunderland,England,54.8571,436.5,551.5,,5.5
+E08000025,Birmingham,England,52.484,408.1,287.4,,10.8
+E08000026,Coventry,England,52.4142,432.8,279.7,,4.0
+E08000027,Dudley,England,52.4951,393.2,288.6,,3.9
+E08000028,Sandwell,England,52.5148,399.6,290.8,,3.4
+E08000029,Solihull,England,52.431,419.4,281.5,,7.1
+E08000030,Walsall,England,52.605,402.1,300.8,,4.2
+E08000031,Wolverhampton,England,52.5979,391.5,300.0,,2.8
+E08000032,Bradford,England,53.8438,408.4,438.6,,14.8
+E08000033,Calderdale,England,53.7205,402.6,424.9,,14.7
+E08000034,Kirklees,England,53.6423,414.6,416.2,,16.2
+E08000035,Leeds,England,53.8227,432.5,436.4,,22.0
+E08000036,Wakefield,England,53.6592,438.4,418.2,,13.5
+E08000037,Gateshead,England,54.9311,420.2,559.7,,5.8
+E08000038,Barnsley,England,53.5258,430.0,403.3,,13.1
+E08000039,Sheffield,England,53.4036,430.5,389.7,,14.6
+E09000001,City of London,England,51.5156,532.4,181.4,,0.1
+E09000002,Barking and Dagenham,England,51.5456,547.8,185.1,,1.4
+E09000003,Barnet,England,51.6111,523.5,191.8,,3.5
+E09000004,Bexley,England,51.4582,549.2,175.4,,2.4
+E09000005,Brent,England,51.5644,519.6,186.5,,1.8
+E09000006,Bromley,England,51.3727,542.0,165.7,,6.0
+E09000007,Camden,England,51.5431,527.5,184.3,,0.9
+E09000008,Croydon,England,51.366,533.9,164.7,,3.4
+E09000009,Ealing,England,51.5244,517.1,182.0,,2.2
+E09000010,Enfield,England,51.6489,532.8,196.2,,3.3
+E09000011,Greenwich,England,51.4639,542.5,175.9,,1.9
+E09000012,Hackney,England,51.5549,534.6,185.8,,0.8
+E09000013,Hammersmith and Fulham,England,51.4873,523.9,178.0,,0.7
+E09000014,Haringey,England,51.5877,531.3,189.3,,1.1
+E09000015,Harrow,England,51.5947,515.4,189.7,,2.1
+E09000016,Havering,England,51.5652,555.0,187.5,,4.6
+E09000017,Hillingdon,England,51.5366,508.2,183.1,,4.6
+E09000018,Hounslow,England,51.4624,512.7,175.0,,2.2
+E09000019,Islington,England,51.5455,531.2,184.6,,0.6
+E09000020,Kensington and Chelsea,England,51.4964,525.8,179.1,,0.5
+E09000021,Kingston upon Thames,England,51.393,519.5,167.4,,1.5
+E09000022,Lambeth,England,51.4645,531.1,175.6,,1.1
+E09000023,Lewisham,England,51.4423,537.9,173.3,,1.4
+E09000024,Merton,England,51.4106,526.1,169.5,,1.5
+E09000025,Newham,England,51.5315,540.7,183.3,,1.5
+E09000026,Redbridge,England,51.5859,543.5,189.5,,2.3
+E09000027,Richmond upon Thames,England,51.4404,519.0,172.7,,2.3
+E09000028,Southwark,England,51.4659,533.9,175.9,,1.2
+E09000029,Sutton,England,51.3576,527.4,163.6,,1.8
+E09000030,Tower Hamlets,England,51.5155,536.3,181.5,,0.8
+E09000031,Waltham Forest,England,51.5946,537.3,190.3,,1.6
+E09000032,Wandsworth,England,51.4524,525.2,174.1,,1.3
+E09000033,Westminster,England,51.5122,528.3,180.9,,0.9
+N09000001,Antrim and Newtownabbey,Northern Ireland,54.6944,130.8,541.3,,29.0
+N09000002-1,"Armagh City, Banbridge and Craigavon - Armagh area",Northern Ireland,54.3276,98.0,502.4,"Armagh City, Banbridge and Craigavon",25.2
+N09000002-2,"Armagh City, Banbridge and Craigavon - Craigavon area",Northern Ireland,54.4017,120.6,509.2,"Armagh City, Banbridge and Craigavon",32.1
+N09000003,Belfast,Northern Ireland,54.5991,146.5,529.7,,5.5
+N09000004-1,Causeway Coast and Glens - Ballymoney area,Northern Ireland,55.1077,122.8,587.9,Causeway Coast and Glens,39.5
+N09000004-2,Causeway Coast and Glens - Coleraine area,Northern Ireland,55.0116,90.5,579.3,Causeway Coast and Glens,39.3
+N09000005-1,Derry City and Strabane - Derry/Londonderry area,Northern Ireland,54.8838,64.7,566.9,Derry City and Strabane,31.8
+N09000005-2,Derry City and Strabane - Castlederg area,Northern Ireland,54.7036,39.5,548.7,Derry City and Strabane,17.0
+N09000006-1,Fermanagh and Omagh - Omagh area,Northern Ireland,54.6016,61.4,535.6,Fermanagh and Omagh,40.6
+N09000006-2,Fermanagh and Omagh - Irvinestown area,Northern Ireland,54.4783,23.4,524.8,Fermanagh and Omagh,29.6
+N09000006-3,Fermanagh and Omagh - Lisnaskea area,Northern Ireland,54.2579,49.5,498.1,Fermanagh and Omagh,24.8
+N09000006-4,Fermanagh and Omagh - Enniskillen area,Northern Ireland,54.3248,31.4,507.0,Fermanagh and Omagh,25.2
+N09000007,Lisburn and Castlereagh,Northern Ireland,54.4981,138.7,518.9,,20.5
+N09000008-1,Mid and East Antrim - Ballymena area,Northern Ireland,54.9057,127.9,565.0,Mid and East Antrim,25.0
+N09000008-2,Mid and East Antrim - Larne area,Northern Ireland,54.8296,149.8,555.3,Mid and East Antrim,17.4
+N09000009-1,Mid Ulster - Cookstown area,Northern Ireland,54.7258,98.7,546.8,Mid Ulster,46.9
+N09000009-2,Mid Ulster - Dungannon area,Northern Ireland,54.4654,78.8,519.1,Mid Ulster,31.5
+N09000010-1,"Newry, Mourne and Down - Downpatrick area",Northern Ireland,54.3224,151.8,498.6,"Newry, Mourne and Down",32.6
+N09000010-2,"Newry, Mourne and Down - Newry area",Northern Ireland,54.1522,118.7,481.5,"Newry, Mourne and Down",34.4
+N09000011,Ards and North Down,Northern Ireland,54.5647,164.3,524.9,,20.7
+S12000005,Clackmannanshire,Scotland,56.1479,291.2,696.4,,6.3
+S12000006-1,Dumfries and Galloway - Moffat area,Scotland,55.2568,308.6,596.8,Dumfries and Galloway,36.1
+S12000006-2,Dumfries and Galloway - Stranraer area,Scotland,54.9096,214.9,561.0,Dumfries and Galloway,32.3
+S12000006-3,Dumfries and Galloway - Wigtown area,Scotland,54.8426,237.2,552.7,Dumfries and Galloway,32.1
+S12000006-4,Dumfries and Galloway - Dumfries area,Scotland,54.9799,283.2,566.6,Dumfries and Galloway,44.7
+S12000006-5,Dumfries and Galloway - Sanquhar area,Scotland,55.2804,277.5,600.2,Dumfries and Galloway,37.1
+S12000006-6,Dumfries and Galloway - Annan area,Scotland,55.1225,326.6,581.5,Dumfries and Galloway,38.4
+S12000006-7,Dumfries and Galloway - Carsphairn area,Scotland,55.1024,252.0,581.1,Dumfries and Galloway,35.6
+S12000008-1,East Ayrshire - Kilmarnock area,Scotland,55.6067,252.7,637.3,East Ayrshire,23.0
+S12000008-2,East Ayrshire - New Cumnock area,Scotland,55.3853,254.8,612.5,East Ayrshire,27.9
+S12000010,East Lothian,Scotland,55.9421,354.9,672.4,,27.0
+S12000011,East Renfrewshire,Scotland,55.7487,251.9,653.1,,7.0
+S12000013-1,Na h-Eileanan Siar - Stornoway area,Scotland,58.2957,138.9,942.8,Na h-Eileanan Siar,34.5
+S12000013-2,Na h-Eileanan Siar - Lochmaddy area,Scotland,57.6004,84.4,869.0,Na h-Eileanan Siar,17.8
+S12000013-3,Na h-Eileanan Siar - Tarbert area,Scotland,58.0298,116.9,914.6,Na h-Eileanan Siar,49.4
+S12000013-4,Na h-Eileanan Siar - Castlebay area,Scotland,57.1839,76.0,823.1,Na h-Eileanan Siar,14.6
+S12000014,Falkirk,Scotland,56.0008,285.6,680.2,,11.8
+S12000017-1,Highland - Newport area,Scotland,58.2638,303.2,931.8,Highland,31.0
+S12000017-2,Highland - Spean Bridge area,Scotland,56.944,242.3,786.6,Highland,47.3
+S12000017-3,Highland - Kingussie area,Scotland,57.063,275.4,798.8,Highland,45.4
+S12000017-4,Highland - Caol area,Scotland,56.891,200.7,782.5,Highland,40.5
+S12000017-5,Highland - Durness area,Scotland,58.4161,231.4,951.1,Highland,38.6
+S12000017-6,Highland - Altnaharra area,Scotland,58.3811,259.0,946.2,Highland,38.3
+S12000017-7,Highland - Shieldaig area,Scotland,57.4298,187.5,843.3,Highland,39.4
+S12000017-8,Highland - Alness area,Scotland,57.8133,266.9,882.6,Highland,41.0
+S12000017-9,Highland - Drumnadrochit area,Scotland,57.2646,249.1,822.1,Highland,44.9
+S12000017-10,Highland - Bettyhill area,Scotland,58.4527,287.9,953.2,Highland,33.7
+S12000017-11,Highland - Lochinver area,Scotland,58.1019,217.2,916.8,Highland,37.9
+S12000017-12,Highland - Kinlochleven area,Scotland,56.701,220.7,760.4,Highland,39.9
+S12000017-13,Highland - Lairg area,Scotland,58.0806,246.9,913.1,Highland,40.6
+S12000017-14,Highland - Kinloch area,Scotland,56.9884,137.3,796.9,Highland,7.0
+S12000017-15,Highland - Dingwall area,Scotland,57.569,248.5,856.0,Highland,38.0
+S12000017-16,Highland - Carbost area,Scotland,57.2757,149.3,828.2,Highland,26.2
+S12000017-17,Highland - Golspie area,Scotland,58.1166,277.6,916.1,Highland,39.0
+S12000017-18,Highland - Uig area,Scotland,57.4911,136.4,853.1,Highland,31.5
+S12000017-19,Highland - south-west,Scotland,57.1776,215.4,813.8,Highland,45.7
+S12000017-20,Highland - Aviemore area,Scotland,57.2806,299.0,822.4,Highland,37.1
+S12000017-21,Highland - Kilchoan area,Scotland,56.6964,171.3,762.3,Highland,44.9
+S12000017-22,Highland - Arisaig area,Scotland,57.0909,180.9,805.8,Highland,37.4
+S12000017-23,Highland - Gairloch area,Scotland,57.7368,192.9,877.2,Highland,44.3
+S12000017-24,Highland - Ullapool area,Scotland,57.8077,228.0,883.5,Highland,44.3
+S12000017-25,Highland - Achnasheen area,Scotland,57.4896,218.5,848.4,Highland,42.4
+S12000017-26,Highland - Inverness area,Scotland,57.4507,279.7,841.8,Highland,39.6
+S12000017-27,Highland - Thurso area,Scotland,58.4947,322.3,957.1,Highland,40.0
+S12000018,Inverclyde,Scotland,55.9003,227.9,670.9,,6.5
+S12000019,Midlothian,Scotland,55.8211,330.1,659.2,,14.2
+S12000020-1,Moray - Elgin area,Scotland,57.567,312.4,853.9,Moray,31.4
+S12000020-2,Moray - Tomintoul area,Scotland,57.2807,322.1,821.9,Moray,28.7
+S12000020-3,Moray - Buckie area,Scotland,57.5625,338.9,853.0,Moray,29.4
+S12000021,North Ayrshire,Scotland,55.7279,229.0,651.6,,34.5
+S12000023,Orkney Islands,Scotland,58.9433,348.3,1006.6,,36.8
+S12000026-1,Scottish Borders - Duns area,Scotland,55.791,378.4,655.4,Scottish Borders,34.5
+S12000026-2,Scottish Borders - Kelso area,Scotland,55.4995,370.3,623.0,Scottish Borders,33.6
+S12000026-3,Scottish Borders - Peebles area,Scotland,55.5811,319.7,632.7,Scottish Borders,45.6
+S12000026-4,Scottish Borders - Hawick area,Scotland,55.3454,346.3,606.0,Scottish Borders,39.0
+S12000026-5,Scottish Borders - Galashiels area,Scotland,55.6782,348.1,643.1,Scottish Borders,36.9
+S12000027-1,Shetland Islands - Clivocast area,Scotland,60.582,446.4,1189.0,Shetland Islands,24.8
+S12000027-2,Shetland Islands - Lerwick area,Scotland,60.206,436.4,1147.0,Shetland Islands,30.0
+S12000028-1,South Ayrshire - Ayr area,Scotland,55.4075,236.0,615.7,South Ayrshire,21.2
+S12000028-2,South Ayrshire - Girvan area,Scotland,55.1594,224.1,588.5,South Ayrshire,27.4
+S12000029-1,South Lanarkshire - East Kilbride area,Scotland,55.693,273.4,646.2,South Lanarkshire,28.0
+S12000029-2,South Lanarkshire - Lanark area,Scotland,55.5607,294.4,630.9,South Lanarkshire,42.9
+S12000030-1,Stirling - Killin area,Scotland,56.3905,247.4,724.8,Stirling,36.3
+S12000030-2,Stirling - Stirling area,Scotland,56.1511,271.8,697.3,Stirling,26.5
+S12000030-3,Stirling - Balfron area,Scotland,56.1396,249.0,696.8,Stirling,27.5
+S12000033,Aberdeen City,Scotland,57.167,387.8,808.5,,7.3
+S12000034-1,Aberdeenshire - Peterhead area,Scotland,57.5165,397.5,847.4,Aberdeenshire,36.7
+S12000034-2,Aberdeenshire - Aboyne area,Scotland,57.1236,342.4,804.0,Aberdeenshire,41.9
+S12000034-3,Aberdeenshire - Braemar area,Scotland,57.0013,313.1,790.9,Aberdeenshire,33.4
+S12000034-4,Aberdeenshire - Stonehaven area,Scotland,56.9576,372.8,785.2,Aberdeenshire,43.9
+S12000034-5,Aberdeenshire - Huntly area,Scotland,57.3734,354.0,831.7,Aberdeenshire,30.2
+S12000034-6,Aberdeenshire - Turriff area,Scotland,57.5693,370.3,853.4,Aberdeenshire,30.2
+S12000034-7,Aberdeenshire - Inverurie area,Scotland,57.2701,379.3,820.0,Aberdeenshire,35.7
+S12000035-1,Argyll and Bute - Oban area,Scotland,56.2708,189.7,713.9,Argyll and Bute,40.7
+S12000035-2,Argyll and Bute - Rothesay area,Scotland,55.9058,180.4,673.7,Argyll and Bute,43.4
+S12000035-3,Argyll and Bute - Port Ellen area,Scotland,55.8181,139.2,666.2,Argyll and Bute,35.9
+S12000035-4,Argyll and Bute - Campbeltown area,Scotland,55.505,171.3,629.4,Argyll and Bute,24.8
+S12000035-5,Argyll and Bute - Tobermory area,Scotland,56.4676,161.7,737.3,Argyll and Bute,39.4
+S12000035-6,Argyll and Bute - Taynuilt area,Scotland,56.465,214.2,734.4,Argyll and Bute,44.4
+S12000035-7,Argyll and Bute - Helensburgh area,Scotland,56.0862,209.9,692.4,Argyll and Bute,43.4
+S12000036,City of Edinburgh,Scotland,55.9112,320.2,669.4,,10.5
+S12000038,Renfrewshire,Scotland,55.8486,239.3,664.7,,10.5
+S12000039,West Dunbartonshire,Scotland,56.0014,242.9,681.6,,7.1
+S12000040,West Lothian,Scotland,55.8992,299.5,668.5,,17.1
+S12000041-1,Angus - Clova area,Scotland,56.8282,334.1,771.3,Angus,35.9
+S12000041-2,Angus - Arbroath area,Scotland,56.7201,358.6,758.9,Angus,26.0
+S12000041-3,Angus - Forfar area,Scotland,56.5841,342.1,744.0,Angus,25.4
+S12000042,Dundee City,Scotland,56.4776,340.3,732.1,,2.4
+S12000045,East Dunbartonshire,Scotland,55.9583,261.2,676.2,,7.0
+S12000047-1,Fife - Methil area,Scotland,56.2975,340.3,712.1,Fife,31.5
+S12000047-2,Fife - Dunfermline area,Scotland,56.1237,314.7,693.2,Fife,21.0
+S12000048-1,Perth and Kinross - Pitlochry area,Scotland,56.7633,301.0,764.7,Perth and Kinross,35.9
+S12000048-2,Perth and Kinross - Crieff area,Scotland,56.4389,280.0,729.1,Perth and Kinross,41.8
+S12000048-3,Perth and Kinross - Auchterarder area,Scotland,56.2815,303.6,711.0,Perth and Kinross,33.1
+S12000048-4,Perth and Kinross - Perth area,Scotland,56.5248,314.6,737.8,Perth and Kinross,37.1
+S12000048-5,Perth and Kinross - Aberfeldy area,Scotland,56.7656,275.3,765.6,Perth and Kinross,34.4
+S12000048-6,Perth and Kinross - west,Scotland,56.6354,252.2,751.9,Perth and Kinross,33.0
+S12000049,Glasgow City,Scotland,55.8765,261.5,667.0,,7.1
+S12000050,North Lanarkshire,Scotland,55.8681,278.0,665.6,,18.8
+W06000001,Isle of Anglesey,Wales,53.2793,245.2,378.3,,27.7
+W06000002-1,Gwynedd - Bangor area,Wales,53.0064,248.6,347.8,Gwynedd,44.5
+W06000002-2,Gwynedd - Bala area,Wales,52.88,283.5,332.8,Gwynedd,30.5
+W06000002-3,Gwynedd - Barmouth area,Wales,52.7109,268.4,314.4,Gwynedd,26.1
+W06000003-1,Conwy - Colwyn Bay area,Wales,53.221,285.4,370.7,Conwy,21.9
+W06000003-2,Conwy - Llanrwst area,Wales,53.0605,282.9,352.9,Conwy,23.4
+W06000004,Denbighshire,Wales,53.0883,309.8,355.4,,33.4
+W06000005,Flintshire,Wales,53.2147,321.1,369.3,,17.2
+W06000006,Wrexham,Wales,53.0017,333.5,345.4,,20.3
+W06000008-1,Ceredigion - Aberystwyth area,Wales,52.3295,269.3,271.9,Ceredigion,43.6
+W06000008-2,Ceredigion - Cardigan area,Wales,52.1323,241.5,250.8,Ceredigion,27.1
+W06000009-1,Pembrokeshire - Fishguard area,Wales,51.9648,208.9,233.3,Pembrokeshire,26.5
+W06000009-2,Pembrokeshire - St Davids area,Wales,51.7774,196.1,212.9,Pembrokeshire,37.2
+W06000010-1,Carmarthenshire - Llandeilo area,Wales,51.991,268.4,234.2,Carmarthenshire,36.9
+W06000010-2,Carmarthenshire - Llanelli area,Wales,51.7989,252.0,213.3,Carmarthenshire,26.7
+W06000010-3,Carmarthenshire - Carmarthen area,Wales,51.8959,231.5,224.8,Carmarthenshire,31.0
+W06000011,Swansea,Wales,51.6581,264.0,197.3,,15.1
+W06000012,Neath Port Talbot,Wales,51.6445,279.3,195.4,,17.8
+W06000013,Bridgend,Wales,51.5606,288.2,185.9,,9.9
+W06000014,Vale of Glamorgan,Wales,51.4484,302.9,173.1,,13.0
+W06000015,Cardiff,Wales,51.5025,315.3,178.9,,5.7
+W06000016,Rhondda Cynon Taf,Wales,51.6219,302.2,192.4,,16.9
+W06000018,Caerphilly,Wales,51.65,317.2,195.3,,11.1
+W06000019,Blaenau Gwent,Wales,51.7536,318.2,206.8,,4.4
+W06000020,Torfaen,Wales,51.6984,327.5,200.5,,5.0
+W06000021,Monmouthshire,Wales,51.7783,337.8,209.2,,34.0
+W06000022,Newport,Wales,51.5823,337.9,187.4,,7.5
+W06000023-1,Powys - Newtown area,Wales,52.3634,316.0,274.6,Powys,34.7
+W06000023-2,Powys - Brecon area,Wales,51.9951,314.7,233.7,Powys,32.3
+W06000023-3,Powys - Ystradgynlais area,Wales,51.896,292.5,223.1,Powys,27.1
+W06000023-4,Powys - Llanwrtyd Wells area,Wales,52.2058,294.7,257.5,Powys,34.5
+W06000023-5,Powys - Llanidloes area,Wales,52.5405,290.7,294.8,Powys,36.6
+W06000023-6,Powys - Welshpool area,Wales,52.7227,312.3,314.7,Powys,42.8
+W06000024,Merthyr Tydfil,Wales,51.7484,305.9,206.4,,4.5

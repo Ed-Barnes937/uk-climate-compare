@@ -1,0 +1,679 @@
+<style>
+.uk { display: flex; flex-direction: column; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); }
+.uk-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+.uk-take { color: var(--color-fg-muted); margin: var(--cds-gap-sm) 0 0; max-width: 72ch; line-height: 1.55; min-height: 3em; }
+.uk-take .uk-v, .uk-take .uk-n { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.uk-controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); align-items: center; }
+.uk-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-transform: uppercase; letter-spacing: .06em; margin-right: var(--cds-gap-xs); }
+.uk-seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); overflow: hidden; }
+.uk-seg button { font: inherit; font-size: var(--cds-font-size-caption); padding: var(--cds-pad-xs) var(--cds-pad-sm); background: transparent; color: var(--color-fg-muted); border: 0; cursor: pointer; }
+.uk-seg button + button { border-left: 1px solid var(--color-border-line); }
+.uk-seg button[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); }
+.uk-seg button:focus-visible, .uk-pick:focus-visible, .uk-th:focus-visible, .uk-chip button:focus-visible, .uk-search:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+.uk-section { display: flex; flex-direction: column; gap: var(--cds-gap-md); }
+.uk-section h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.uk-sub { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: 0; }
+.uk-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-sm); position: relative; min-width: 0; }
+.uk-card h3 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.uk-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--cds-gap-md); align-items: start; }
+@media (min-width: 64rem) { .uk-split { grid-template-columns: minmax(18rem, 2fr) minmax(0, 3fr); } }
+.uk-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--cds-gap-md); }
+.uk-chart { min-height: 230px; position: relative; }
+.uk-chart svg { display: block; overflow: visible; }
+.uk-chart text { fill: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.uk-chips { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); min-height: 2rem; align-items: center; }
+.uk-chip { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); border: 1px solid var(--color-border-line); border-radius: 999px; padding: 2px 4px 2px 10px; font-size: var(--cds-font-size-caption); background: var(--color-panel); }
+.uk-chip button { border: 0; background: transparent; color: var(--color-fg-muted); cursor: pointer; font: inherit; padding: 0 6px; border-radius: 999px; }
+.uk-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+.uk-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); z-index: 2; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.uk-tip .uk-tip-h { color: var(--cds-text-secondary); margin-bottom: 2px; }
+.uk-tip .uk-tip-r { display: flex; align-items: center; gap: 6px; }
+.uk-tip .uk-tip-r span:last-child { margin-left: auto; padding-left: 12px; }
+.uk-maphead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--cds-gap-sm); }
+.uk-select { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); }
+.uk-select select, .uk-search { font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg); background: var(--color-bg); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 2px var(--cds-pad-xs); }
+.uk-search { padding: var(--cds-pad-xs) var(--cds-pad-sm); min-width: 0; width: 14rem; max-width: 100%; }
+.uk-map { min-height: 460px; position: relative; }
+.uk-map svg { display: block; margin-inline: auto; max-width: 100%; }
+.uk-map .uk-area, .uk-map .uk-stn { cursor: pointer; }
+.uk-map .uk-area:hover { stroke: var(--color-fg); stroke-width: 1.25px; }
+.uk-map svg path, .uk-map svg circle { vector-effect: non-scaling-stroke; }
+.uk-zoom { position: absolute; top: var(--cds-pad-sm); left: var(--cds-pad-sm); display: flex; flex-direction: column; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-panel); box-shadow: var(--cds-shadow-popover); overflow: hidden; z-index: 1; }
+.uk-zoom button { font: inherit; font-size: var(--cds-font-size-body); line-height: 1; width: 32px; height: 32px; border: 0; background: transparent; color: var(--color-fg); cursor: pointer; padding: 0; }
+.uk-zoom button + button { border-top: 1px solid var(--color-border-line); }
+.uk-zoom button:hover { background: var(--color-bg); }
+.uk-zoom button:disabled { color: var(--color-fg-muted); opacity: .5; cursor: default; }
+.uk-zoom svg { width: 14px; height: 14px; display: block; margin: auto; }
+.uk-legend { display: flex; align-items: center; gap: var(--cds-gap-sm); flex-wrap: wrap; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; min-height: 1.25rem; }
+.uk-ramp { width: 8rem; height: 8px; border-radius: 4px; }
+.uk-tabletools { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); justify-content: space-between; align-items: center; }
+.uk-tablewrap { overflow: auto; max-height: 36rem; }
+.uk-table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: var(--cds-font-size-body); }
+.uk-table th { position: sticky; top: 0; background: var(--color-panel); text-align: right; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding: 0; border-bottom: 1px solid var(--color-border-line); vertical-align: bottom; z-index: 1; }
+.uk-table th.uk-left, .uk-table td.uk-left { text-align: left; }
+.uk-th { font: inherit; color: inherit; background: transparent; border: 0; cursor: pointer; padding: var(--cds-pad-xs) var(--cds-pad-sm); width: 100%; text-align: inherit; line-height: 1.3; }
+.uk-th small { display: block; font-weight: 400; opacity: .8; }
+.uk-table th[aria-sort] .uk-th { color: var(--color-fg); }
+.uk-table td { padding: var(--cds-pad-xs) var(--cds-pad-sm); text-align: right; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.uk-table tbody tr { cursor: pointer; }
+.uk-table tbody tr:hover td { background: var(--color-bg); }
+.uk-loc { display: flex; flex-direction: column; }
+.uk-loc span:last-child { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.uk-pick { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--color-border-line); background: transparent; cursor: pointer; padding: 0; display: block; }
+.uk-bar { display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.uk-bar i { display: inline-block; height: 6px; border-radius: 3px; background: var(--cds-chart-muted); }
+.uk-na { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.uk-foot { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); line-height: 1.5; max-width: 80ch; margin: 0; }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+</style>
+
+<div class="uk">
+  <header class="uk-head" id="top">
+    <h1>UK Climate Compare</h1>
+    <p class="uk-take dash-skeleton" id="takeaway" data-source="summary"></p>
+  </header>
+
+  <div class="uk-controls">
+    <div><span class="uk-label">Period</span><span class="uk-seg" id="period-ctl" role="group" aria-label="Period">
+      <button type="button" data-v="10y">Last 10 years (2016-2025)</button><button type="button" data-v="20y">Last 20 years (2006-2025)</button>
+    </span></div>
+    <div><span class="uk-label">Nation</span><span class="uk-seg" id="nation-ctl" role="group" aria-label="Nation">
+      <button type="button" data-v="all">All</button><button type="button" data-v="England">England</button><button type="button" data-v="Scotland">Scotland</button><button type="button" data-v="Wales">Wales</button><button type="button" data-v="Northern Ireland">N. Ireland</button>
+    </span></div>
+  </div>
+
+  <section class="uk-section" id="compare">
+    <div>
+      <h2>Compare places</h2>
+      <p class="uk-sub">Click a council area or a station dot on the map, or a row in the table, to add or remove it. You can compare up to six.</p>
+    </div>
+    <div class="uk-chips" id="chips" data-source="summary"></div>
+    <div class="uk-split">
+      <div class="uk-card" id="card-map">
+        <div class="uk-maphead">
+          <h3>Map</h3>
+          <label class="uk-select"><span class="uk-label">Shade by</span>
+            <select id="metric-ctl">
+              <option value="sun">Sunshine</option>
+              <option value="rain">Rainfall</option>
+              <option value="raindays">Rain days</option>
+              <option value="summer_high">Summer high</option>
+              <option value="winter_low">Winter low</option>
+              <option value="frost">Air frosts</option>
+            </select>
+          </label>
+        </div>
+        <p class="uk-sub">Council areas, with the largest split into pieces of about 1,000 km², shaded by their estimated average. Dots are weather stations. Drag to pan; zoom with the buttons, a pinch, or ctrl/⌘ + scroll.</p>
+        <div class="uk-map dash-skeleton" id="map" data-source="boundaries summary stations"></div>
+        <div class="uk-legend" id="map-legend" data-source="summary"></div>
+      </div>
+      <div class="uk-charts">
+        <div class="uk-card" id="card-temp"><h3>Temperature</h3><p class="uk-sub">Average daily high (solid) and overnight low (dashed), °C</p><div class="uk-chart dash-skeleton" id="chart-temp" data-source="climate"></div></div>
+        <div class="uk-card" id="card-rain"><h3>Rainfall</h3><p class="uk-sub">Total per month, mm</p><div class="uk-chart dash-skeleton" id="chart-rain" data-source="climate"></div></div>
+        <div class="uk-card" id="card-raindays"><h3>Days with rain</h3><p class="uk-sub">Days per month with 1 mm or more, 1991-2020 average</p><div class="uk-chart dash-skeleton" id="chart-raindays" data-source="climate"></div></div>
+        <div class="uk-card" id="card-sun"><h3>Sunshine</h3><p class="uk-sub">Hours of bright sunshine per month</p><div class="uk-chart dash-skeleton" id="chart-sun" data-source="climate"></div></div>
+        <div class="uk-card" id="card-day"><h3>Length of day</h3><p class="uk-sub">Sunrise to sunset on the 15th of each month, hours</p><div class="uk-chart dash-skeleton" id="chart-day" data-source="climate"></div></div>
+        <div class="uk-card" id="card-frost"><h3>Air frosts</h3><p class="uk-sub">Days per month when the air drops below 0°C</p><div class="uk-chart dash-skeleton" id="chart-frost" data-source="climate"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="uk-section" id="all">
+    <div>
+      <h2>All places</h2>
+      <p class="uk-sub">Yearly averages. Summer is June to August, winter is December to February. Click a column to sort.</p>
+    </div>
+    <div class="uk-card">
+      <div class="uk-tabletools">
+        <span class="uk-seg" id="list-ctl" role="group" aria-label="Show">
+          <button type="button" data-v="area">Council areas</button><button type="button" data-v="station">Weather stations</button>
+        </span>
+        <input class="uk-search" id="search" type="search" placeholder="Search by name" aria-label="Search by name">
+      </div>
+      <div class="uk-tablewrap">
+        <table class="uk-table" id="table" data-source="summary" data-row-key="id,period">
+          <thead><tr>
+            <th class="uk-left"><span class="uk-th" aria-hidden="true"></span></th>
+            <th class="uk-left" data-field="name"><button type="button" class="uk-th" data-k="name">Place</button></th>
+            <th data-field="summer_high"><button type="button" class="uk-th" data-k="summer_high">Summer high<small>°C</small></button></th>
+            <th data-field="winter_high"><button type="button" class="uk-th" data-k="winter_high">Winter high<small>°C</small></button></th>
+            <th data-field="winter_low"><button type="button" class="uk-th" data-k="winter_low">Winter low<small>°C</small></button></th>
+            <th data-field="rain"><button type="button" class="uk-th" data-k="rain">Rainfall<small>mm a year</small></button></th>
+            <th data-field="raindays"><button type="button" class="uk-th" data-k="raindays">Rain days<small>1 mm+, 1991-2020</small></button></th>
+            <th data-field="sun"><button type="button" class="uk-th" data-k="sun">Sunshine<small>hours a year</small></button></th>
+            <th data-field="frost"><button type="button" class="uk-th" data-k="frost">Air frosts<small>days a year</small></button></th>
+            <th data-field="day_long"><button type="button" class="uk-th" data-k="day_long">Longest day<small>21 June</small></button></th>
+            <th data-field="day_short"><button type="button" class="uk-th" data-k="day_short">Shortest day<small>21 Dec</small></button></th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <p class="uk-foot">Weather stations: readings from Met Office climate stations, so each figure is for that exact spot. Some stations have no sunshine recorder. Council areas: the Met Office HadUK-Grid 1991-2020 average over the area's 5 km squares, weighted by how much of each square lies inside it, then shifted to the period picked above using how much the nearest few stations' readings differ from their own 1991-2020 grid values. Council areas larger than about 1,000 km² (52 of them, such as North Yorkshire and Highland) are split into pieces of about that size and named after their biggest town or village. Pieces in hilly country still average mountains, glens and coast together, so the figure may not match where people actually live. Days with rain cover 1991-2020 for every place. Length of day is calculated from latitude.</p>
+  </section>
+</div>
+
+<script>
+dash.calc('climate', {
+  title: 'Monthly averages by place',
+  description: 'Stations: mean of each calendar month over 2016-2025 (10y) or 2006-2025 (20y), needing 70% of years reported. Council areas: their 1991-2020 grid average, shifted by the inverse-distance-weighted difference between the nearest four stations that record that measure and their own 1991-2020 grid values (added for temperatures and frosts, scaled for rain and sun). Rain days are 1991-2020 grid values everywhere. Daylight is sunrise to sunset on the 15th, from latitude.',
+  inputs: ['monthly', 'stations', 'stationgrid', 'areas', 'areagrid'],
+  fn: (monthly, stations, stationgrid, areas, areagrid) => {
+    const val = (v) => (v === '' || v == null ? null : Number(v));
+    const sg = new Map(stationgrid.map((r) => [`${r.id}|${r.month}`, r]));
+    const ag = new Map(areagrid.map((r) => [`${r.id}|${r.month}`, r]));
+    const mids = [15, 46, 74, 105, 135, 166, 196, 227, 258, 288, 319, 349];
+    const rad = Math.PI / 180;
+    const daylight = (lat, n) => {
+      const dec = 23.44 * rad * Math.sin(2 * Math.PI * (284 + n) / 365);
+      const c = (Math.sin(-0.833 * rad) - Math.sin(lat * rad) * Math.sin(dec)) / (Math.cos(lat * rad) * Math.cos(dec));
+      return (2 * Math.acos(Math.max(-1, Math.min(1, c))) / rad) / 15;
+    };
+    const PERIODS = [['10y', 2016], ['20y', 2006]];
+    const KEYS = ['tmax', 'tmin', 'rain', 'sun', 'af'];
+    const ratio = (k) => k === 'rain' || k === 'sun';
+    const out = [];
+    const shift = new Map();
+    for (const s of stations) {
+      const mine = monthly.filter((r) => r.station === s.id);
+      for (const [period, from] of PERIODS) {
+        const years = 2025 - from + 1;
+        for (let m = 1; m <= 12; m++) {
+          const rows = mine.filter((r) => Number(r.month) === m && Number(r.year) >= from);
+          const row = { id: s.id, kind: 'station', period, month: m, raindays: val(sg.get(`${s.id}|${m}`)?.raindays), daylight: daylight(Number(s.lat), mids[m - 1]) };
+          for (const k of KEYS) {
+            const v = rows.map((r) => val(r[k])).filter((x) => x != null);
+            row[k] = v.length >= 0.7 * years ? v.reduce((a, b) => a + b, 0) / v.length : null;
+            const base = val(sg.get(`${s.id}|${m}`)?.[k]);
+            if (row[k] != null && base != null && (!ratio(k) || base > 0)) shift.set(`${s.id}|${period}|${m}|${k}`, ratio(k) ? row[k] / base : row[k] - base);
+          }
+          out.push(row);
+        }
+      }
+    }
+    for (const a of areas) {
+      const near = stations.map((s) => ({ s, d: Math.hypot(Number(s.x) - Number(a.x), Number(s.y) - Number(a.y)) })).sort((p, q) => p.d - q.d);
+      for (const [period] of PERIODS) {
+        for (let m = 1; m <= 12; m++) {
+          const g = ag.get(`${a.id}|${m}`) || {};
+          const row = { id: a.id, kind: 'area', period, month: m, raindays: val(g.raindays), daylight: daylight(Number(a.lat), mids[m - 1]) };
+          for (const k of KEYS) {
+            const base = val(g[k]);
+            const refs = near.filter((n) => shift.has(`${n.s.id}|${period}|${m}|${k}`)).slice(0, 4);
+            if (base == null || !refs.length) { row[k] = null; continue; }
+            const w = refs.map((n) => 1 / Math.max(n.d, 10) ** 2);
+            const delta = refs.reduce((t, n, i) => t + w[i] * shift.get(`${n.s.id}|${period}|${m}|${k}`), 0) / w.reduce((t, x) => t + x, 0);
+            row[k] = ratio(k) ? base * delta : k === 'af' ? Math.max(0, base + delta) : base + delta;
+          }
+          out.push(row);
+        }
+      }
+    }
+    return out;
+  },
+});
+
+dash.calc('summary', {
+  title: 'Yearly figures by place',
+  description: 'Summer high: mean Jun-Aug daily max. Winter high and low: mean Dec-Feb daily max and min. Rainfall, rain days (1 mm or more, 1991-2020), sunshine and air frosts: sum of the 12 monthly averages. Longest and shortest day from latitude on 21 June and 21 December.',
+  inputs: ['climate', 'stations', 'areas'],
+  fn: (climate, stations, areas) => {
+    const rad = Math.PI / 180;
+    const daylight = (lat, n) => {
+      const dec = 23.44 * rad * Math.sin(2 * Math.PI * (284 + n) / 365);
+      const c = (Math.sin(-0.833 * rad) - Math.sin(lat * rad) * Math.sin(dec)) / (Math.cos(lat * rad) * Math.cos(dec));
+      return (2 * Math.acos(Math.max(-1, Math.min(1, c))) / rad) / 15;
+    };
+    const byKey = new Map(climate.map((r) => [`${r.id}|${r.period}|${r.month}`, r]));
+    const full = (a) => a.every((x) => x != null);
+    const sum = (a) => (full(a) ? a.reduce((x, y) => x + y, 0) : null);
+    const mean = (a) => (full(a) ? sum(a) / a.length : null);
+    const places = [
+      ...areas.map((a) => ({ id: a.id, kind: 'area', name: a.name, area: a.parent ? 'Part of a council area' : 'Council area', nation: a.nation, lat: a.lat })),
+      ...stations.map((s) => ({ id: s.id, kind: 'station', name: s.name, area: `${s.area} · station`, nation: s.nation, lat: s.lat })),
+    ];
+    return places.flatMap((p) => ['10y', '20y'].map((period) => {
+      const at = (n, k) => byKey.get(`${p.id}|${period}|${n}`)?.[k] ?? null;
+      const all = (k) => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => at(n, k));
+      return {
+        id: p.id, kind: p.kind, period, name: p.name, area: p.area, nation: p.nation,
+        summer_high: mean([6, 7, 8].map((n) => at(n, 'tmax'))),
+        winter_high: mean([12, 1, 2].map((n) => at(n, 'tmax'))),
+        winter_low: mean([12, 1, 2].map((n) => at(n, 'tmin'))),
+        rain: sum(all('rain')), raindays: sum(all('raindays')), sun: sum(all('sun')), frost: sum(all('af')),
+        day_long: daylight(Number(p.lat), 172), day_short: daylight(Number(p.lat), 355),
+      };
+    }));
+  },
+});
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const PERIOD_TEXT = { '10y': '2016-2025', '20y': '2006-2025' };
+const MAX_PICKS = 6;
+const f1 = d3.format('.1f');
+const f0 = d3.format(',.0f');
+const hm = (h) => { const m = Math.round(h * 60); return `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, '0')}m`; };
+const FMT = { summer_high: f1, winter_high: f1, winter_low: f1, rain: f0, raindays: f0, sun: f0, frost: f0, day_long: hm, day_short: hm };
+const METRICS = {
+  sun: { label: 'Sunshine', fmt: (v) => `${f0(v)} hours a year`, none: 'No sunshine recorder' },
+  rain: { label: 'Rainfall', fmt: (v) => `${f0(v)} mm a year` },
+  raindays: { label: 'Rain days', fmt: (v) => `${f0(v)} days a year` },
+  summer_high: { label: 'Summer high', fmt: (v) => `${f1(v)}°C` },
+  winter_low: { label: 'Winter low', fmt: (v) => `${f1(v)}°C` },
+  frost: { label: 'Air frosts', fmt: (v) => `${f0(v)} days a year` },
+};
+let sortKey = 'sun';
+let sortDir = -1;
+let query = '';
+
+const params = () => {
+  const p = dash.params();
+  return {
+    period: p.period || '10y',
+    nation: p.nation || 'all',
+    list: p.list === 'station' ? 'station' : 'area',
+    metric: METRICS[p.metric] ? p.metric : 'sun',
+    picks: Array.isArray(p.picks) ? p.picks : [],
+  };
+};
+
+for (const [id, key] of [['period-ctl', 'period'], ['nation-ctl', 'nation'], ['list-ctl', 'list']]) {
+  document.getElementById(id).addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-v]');
+    if (b) dash.setParams({ [key]: b.dataset.v });
+  });
+}
+const metricSel = document.getElementById('metric-ctl');
+metricSel.addEventListener('change', () => dash.setParams({ metric: metricSel.value }));
+const search = document.getElementById('search');
+search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); drawTable(); });
+
+const togglePick = (id) => {
+  const picks = params().picks.slice();
+  const i = picks.indexOf(id);
+  if (i >= 0) picks.splice(i, 1);
+  else if (picks.length < MAX_PICKS) picks.push(id);
+  dash.setParams({ picks });
+};
+
+document.querySelector('#table tbody').addEventListener('click', (e) => {
+  const tr = e.target.closest('tr[data-key]');
+  if (tr) togglePick(tr.dataset.key.split(',')[0]);
+});
+document.querySelector('#table thead').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-k]');
+  if (!b) return;
+  if (sortKey === b.dataset.k) sortDir = -sortDir;
+  else { sortKey = b.dataset.k; sortDir = b.dataset.k === 'name' ? 1 : -1; }
+  drawTable();
+});
+document.getElementById('chips').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-id]');
+  if (b) togglePick(b.dataset.id);
+});
+
+function span(cls, text, attrs) {
+  const s = document.createElement('span');
+  s.className = cls;
+  s.textContent = text;
+  for (const [k, v] of Object.entries(attrs || {})) s.setAttribute(k, v);
+  return s;
+}
+
+function periodRows() {
+  const s = dash.data('summary');
+  if (s.status !== 'ok') return null;
+  const { period } = params();
+  return s.data.filter((r) => r.period === period);
+}
+
+function listRows() {
+  const rows = periodRows();
+  if (!rows) return null;
+  const { nation, list } = params();
+  return rows.filter((r) => r.kind === list && (nation === 'all' || r.nation === nation));
+}
+
+function drawControls() {
+  const p = params();
+  for (const [id, v] of [['period-ctl', p.period], ['nation-ctl', p.nation], ['list-ctl', p.list]]) {
+    for (const b of document.querySelectorAll(`#${id} button`)) b.setAttribute('aria-pressed', String(b.dataset.v === v));
+  }
+  metricSel.value = p.metric;
+}
+
+function drawTakeaway() {
+  const el = document.getElementById('takeaway');
+  const rows = listRows();
+  if (!rows) { el.replaceChildren(); return; }
+  el.classList.remove('dash-skeleton');
+  const { period, list } = params();
+  const best = (k, dir) => rows.filter((r) => r[k] != null).sort((a, b) => dir * (b[k] - a[k]))[0];
+  const ref = (r, k, text) => [span('uk-n', r.name), ' (', span('uk-v', text, { 'data-source': 'summary', 'data-field': k, 'data-where': `id=${encodeURIComponent(r.id)}&period=${period}` }), ')'];
+  const sun = best('sun', 1), dry = best('rain', -1), wet = best('rain', 1), hot = best('summer_high', 1), mild = best('winter_low', 1), few = best('raindays', -1);
+  const what = list === 'area' ? 'council areas' : 'weather stations';
+  const parts = [`Across ${PERIOD_TEXT[period]}, of these ${what} `];
+  if (sun) parts.push(...ref(sun, 'sun', `${f0(sun.sun)} hours`), ' was the sunniest, ');
+  if (dry && wet) parts.push(...ref(dry, 'rain', `${f0(dry.rain)} mm`), ' the driest and ', ...ref(wet, 'rain', `${f0(wet.rain)} mm`), ' the wettest. ');
+  if (hot) parts.push(...ref(hot, 'summer_high', `${f1(hot.summer_high)}°C`), ' had the warmest summer afternoons');
+  if (mild) parts.push(', ', ...ref(mild, 'winter_low', `${f1(mild.winter_low)}°C`), ' the mildest winter nights');
+  if (few) parts.push(' and ', ...ref(few, 'raindays', `${f0(few.raindays)} days`), ' the fewest days with rain.');
+  el.replaceChildren(...parts);
+}
+
+function names() {
+  return new Map((periodRows() || []).map((r) => [r.id, r]));
+}
+
+function drawChips() {
+  const el = document.getElementById('chips');
+  const byId = names();
+  const { picks } = params();
+  if (!picks.length) { el.replaceChildren(span('uk-sub', 'Nothing picked yet.')); return; }
+  el.replaceChildren(...picks.map((id, i) => {
+    const r = byId.get(id);
+    const chip = span('uk-chip', '');
+    const dot = span('uk-dot', '');
+    dot.style.background = dash.colors[i];
+    const x = document.createElement('button');
+    x.type = 'button';
+    x.dataset.id = id;
+    x.setAttribute('aria-label', `Remove ${r?.name || id}`);
+    x.textContent = '×';
+    chip.append(dot, span('', r ? `${r.name}${r.kind === 'station' ? ' (station)' : ''}` : id), x);
+    return chip;
+  }));
+}
+
+function drawTable() {
+  const tbody = document.querySelector('#table tbody');
+  const rows = listRows();
+  for (const th of document.querySelectorAll('#table th[data-field]')) {
+    if (th.dataset.field === sortKey) th.setAttribute('aria-sort', sortDir > 0 ? 'ascending' : 'descending');
+    else th.removeAttribute('aria-sort');
+  }
+  if (!rows) { tbody.replaceChildren(); return; }
+  const all = periodRows();
+  const maxRain = d3.max(all, (r) => r.rain);
+  const maxSun = d3.max(all, (r) => r.sun);
+  const { period, picks } = params();
+  const sorted = rows.filter((r) => !query || r.name.toLowerCase().includes(query)).sort((a, b) => {
+    const x = a[sortKey], y = b[sortKey];
+    if (x == null) return 1;
+    if (y == null) return -1;
+    return sortKey === 'name' ? sortDir * String(x).localeCompare(String(y)) : sortDir * (x - y);
+  });
+  tbody.replaceChildren(...sorted.map((r) => {
+    const tr = document.createElement('tr');
+    tr.dataset.key = `${r.id},${period}`;
+    const pi = picks.indexOf(r.id);
+    const tdPick = document.createElement('td');
+    tdPick.className = 'uk-left';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'uk-pick';
+    btn.setAttribute('aria-pressed', String(pi >= 0));
+    btn.setAttribute('aria-label', `${pi >= 0 ? 'Remove' : 'Add'} ${r.name} ${pi >= 0 ? 'from' : 'to'} the charts`);
+    if (pi >= 0) { btn.style.background = dash.colors[pi]; btn.style.borderColor = dash.colors[pi]; }
+    tdPick.append(btn);
+    const tdName = document.createElement('td');
+    tdName.className = 'uk-left';
+    const loc = span('uk-loc', '');
+    loc.append(span('', r.name), span('', `${r.area} · ${r.nation}`));
+    tdName.append(loc);
+    tr.append(tdPick, tdName);
+    for (const k of ['summer_high', 'winter_high', 'winter_low', 'rain', 'raindays', 'sun', 'frost', 'day_long', 'day_short']) {
+      const td = document.createElement('td');
+      if (r[k] == null) td.append(span('uk-na', k === 'sun' ? 'no recorder' : 'n/a'));
+      else if (k === 'rain' || k === 'sun') {
+        const bar = span('uk-bar', '');
+        const i = document.createElement('i');
+        i.style.width = `${Math.round(48 * r[k] / (k === 'rain' ? maxRain : maxSun))}px`;
+        bar.append(i, span('', FMT[k](r[k])));
+        td.append(bar);
+      } else td.textContent = FMT[k](r[k]);
+      tr.append(td);
+    }
+    return tr;
+  }));
+}
+
+const CHARTS = [
+  { id: 'chart-temp', keys: ['tmax', 'tmin'], zero: false, fmt: (v) => `${f1(v)}°C` },
+  { id: 'chart-rain', keys: ['rain'], zero: true, fmt: (v) => `${f0(v)} mm` },
+  { id: 'chart-raindays', keys: ['raindays'], zero: true, fmt: (v) => `${f1(v)} days` },
+  { id: 'chart-sun', keys: ['sun'], zero: true, fmt: (v) => `${f0(v)} h` },
+  { id: 'chart-day', keys: ['daylight'], zero: true, fmt: hm },
+  { id: 'chart-frost', keys: ['af'], zero: true, fmt: (v) => `${f1(v)} days` },
+];
+
+function drawChart(spec, climate, byId) {
+  const el = document.getElementById(spec.id);
+  el.classList.remove('dash-skeleton');
+  const { period, picks } = params();
+  const W = Math.max(240, el.clientWidth);
+  const H = 230;
+  const series = picks.map((id, i) => ({
+    id, color: dash.colors[i], name: byId.get(id)?.name || id,
+    rows: climate.filter((r) => r.id === id && r.period === period).sort((a, b) => a.month - b.month),
+  }));
+  const vals = series.flatMap((s) => s.rows.flatMap((r) => spec.keys.map((k) => r[k]))).filter((v) => v != null);
+  if (!vals.length) {
+    el.replaceChildren(span('uk-sub', picks.length ? 'No readings for these places.' : 'Pick a place on the map or in the table to see it here.'));
+    return;
+  }
+  const svg = d3.create('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+  const tip = document.createElement('div');
+  tip.className = 'uk-tip';
+  tip.hidden = true;
+  const lo = spec.zero ? 0 : Math.min(0, d3.min(vals));
+  const y = d3.scaleLinear([lo, d3.max(vals)], [H - 24, 8]).nice(5);
+  const yAxis = d3.axisLeft(y).ticks(5).tickSize(0).tickPadding(6).tickFormat(spec.id === 'chart-day' ? d3.format('d') : d3.format(','));
+  const gy = svg.append('g').call(yAxis).attr('font-size', null).attr('font-family', null);
+  gy.select('.domain').remove();
+  el.replaceChildren(svg.node(), tip);
+  let left = 0;
+  gy.selectAll('text').each(function () { left = Math.max(left, this.getComputedTextLength()); });
+  const ml = Math.ceil(left) + 10;
+  gy.attr('transform', `translate(${ml},0)`);
+  const x = d3.scalePoint(d3.range(1, 13), [ml + 6, W - 8]);
+  svg.insert('g', ':first-child').selectAll('line').data(y.ticks(5)).join('line')
+    .attr('x1', ml).attr('x2', W).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
+    .style('stroke', (d) => (d === 0 && lo < 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)'));
+  const narrow = W < 420;
+  svg.append('g').selectAll('text').data(d3.range(1, 13)).join('text')
+    .attr('x', (d) => x(d)).attr('y', H - 6).attr('text-anchor', 'middle')
+    .text((d) => (narrow ? MONTHS[d - 1][0] : MONTHS[d - 1]));
+  for (const s of series) {
+    spec.keys.forEach((k, ki) => {
+      const line = d3.line().defined((r) => r[k] != null).x((r) => x(r.month)).y((r) => y(r[k]));
+      svg.append('path').attr('d', line(s.rows)).attr('fill', 'none')
+        .style('stroke', s.color).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round')
+        .attr('stroke-dasharray', ki === 1 ? '4 4' : null);
+    });
+  }
+  const rule = svg.append('line').attr('y1', 8).attr('y2', H - 24).style('stroke', 'var(--cds-chart-reference)').attr('visibility', 'hidden');
+  const dots = svg.append('g');
+  svg.append('rect').attr('x', ml).attr('y', 0).attr('width', W - ml).attr('height', H).attr('fill', 'transparent')
+    .on('pointermove', (event) => {
+      const [px] = d3.pointer(event);
+      const m = d3.range(1, 13).reduce((best, d) => (Math.abs(x(d) - px) < Math.abs(x(best) - px) ? d : best), 1);
+      rule.attr('x1', x(m)).attr('x2', x(m)).attr('visibility', 'visible');
+      const pts = series.flatMap((s) => spec.keys.map((k) => ({ s, v: s.rows[m - 1]?.[k] }))).filter((p) => p.v != null);
+      dots.selectAll('circle').data(pts).join('circle').attr('cx', x(m)).attr('cy', (p) => y(p.v)).attr('r', 3.5).style('fill', (p) => p.s.color);
+      const head = document.createElement('div');
+      head.className = 'uk-tip-h';
+      head.textContent = MONTHS[m - 1];
+      tip.replaceChildren(head, ...series.map((s) => {
+        const r = s.rows[m - 1] || {};
+        const row = document.createElement('div');
+        row.className = 'uk-tip-r';
+        const dot = span('uk-dot', '');
+        dot.style.background = s.color;
+        row.append(dot, span('', s.name), span('', spec.keys.map((k) => (r[k] == null ? 'n/a' : spec.fmt(r[k]))).join(' / ')));
+        return row;
+      }));
+      tip.hidden = false;
+      const scale = el.clientWidth / W;
+      const tw = tip.offsetWidth;
+      let tl = x(m) * scale + 12;
+      if (tl + tw > el.clientWidth) tl = x(m) * scale - tw - 12;
+      tip.style.left = `${Math.max(0, tl)}px`;
+      tip.style.top = '8px';
+    })
+    .on('pointerleave', () => { tip.hidden = true; rule.attr('visibility', 'hidden'); dots.selectAll('circle').remove(); });
+}
+
+function drawCharts() {
+  const c = dash.data('climate');
+  const byId = names();
+  for (const spec of CHARTS) {
+    const el = document.getElementById(spec.id);
+    if (c.status !== 'ok') { el.replaceChildren(); el.classList.add('dash-skeleton'); continue; }
+    drawChart(spec, c.data, byId);
+  }
+}
+
+const resolveColor = (css) => {
+  const probe = document.createElement('span');
+  probe.style.color = css;
+  document.getElementById('map').append(probe);
+  const c = getComputedStyle(probe).color;
+  probe.remove();
+  return c;
+};
+
+const ZOOM_MAX = 12;
+let mapView = null; // { W, t }: last zoom transform, kept while the map width is unchanged
+
+function drawMap() {
+  const el = document.getElementById('map');
+  const legend = document.getElementById('map-legend');
+  const b = dash.data('boundaries'), st = dash.data('stations');
+  const rows = periodRows();
+  if (b.status !== 'ok' || st.status !== 'ok' || !rows) { el.replaceChildren(); legend.replaceChildren(); el.classList.add('dash-skeleton'); return; }
+  el.classList.remove('dash-skeleton');
+  const { nation, picks, metric } = params();
+  const spec = METRICS[metric];
+  const byId = new Map(rows.map((r) => [r.id, r]));
+  const shapes = b.data.map((r) => ({ id: r.id, context: r.context === true || r.context === 'true', rings: typeof r.rings === 'string' ? JSON.parse(r.rings) : r.rings }));
+  const areaShapes = shapes.filter((s) => !s.context);
+
+  // British National Grid in km: x east, y north.
+  const xs = areaShapes.flatMap((s) => s.rings.flatMap((r) => r.map((p) => p[0])));
+  const ys = areaShapes.flatMap((s) => s.rings.flatMap((r) => r.map((p) => p[1])));
+  const [x0, x1] = d3.extent(xs), [y0, y1] = d3.extent(ys);
+  const W0 = Math.max(240, el.clientWidth);
+  let s = W0 / (x1 - x0);
+  if ((y1 - y0) * s > 720) s = 720 / (y1 - y0);
+  const W = Math.round((x1 - x0) * s), H = Math.round((y1 - y0) * s);
+  const pathOf = (rings) => rings.map((r) => 'M' + r.map(([x, y]) => `${((x - x0) * s).toFixed(1)},${((y1 - y) * s).toFixed(1)}`).join('L') + 'Z').join('');
+
+  const areaVals = rows.filter((r) => r.kind === 'area').map((r) => r[metric]).filter((v) => v != null);
+  const [vmin, vmax] = d3.extent(areaVals);
+  const lowC = resolveColor('var(--color-panel)'), highC = resolveColor(dash.colors[0]);
+  const ramp = (v) => d3.interpolateRgb(lowC, highC)(0.12 + 0.88 * (vmax > vmin ? Math.max(0, Math.min(1, (v - vmin) / (vmax - vmin))) : 1));
+
+  const svg = d3.create('svg').attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', `Map of UK council areas shaded by ${spec.label.toLowerCase()}`);
+  const view = svg.append('g');
+  view.append('path').attr('d', shapes.filter((x) => x.context).map((x) => pathOf(x.rings)).join('')).style('fill', 'var(--cds-chart-grid)');
+  const tip = document.createElement('div');
+  tip.className = 'uk-tip';
+  tip.hidden = true;
+  const showTip = (event, r) => {
+    const v = r?.[metric];
+    const head = document.createElement('div');
+    head.className = 'uk-tip-h';
+    head.textContent = r ? `${r.name}${r.kind === 'station' ? ' · station' : ''}` : '';
+    const line = document.createElement('div');
+    line.textContent = v == null ? (spec.none && r?.kind === 'station' ? spec.none : 'No reading') : `${spec.label}: ${spec.fmt(v)}`;
+    tip.replaceChildren(head, line);
+    tip.hidden = false;
+    const [mx, my] = d3.pointer(event, el);
+    const tw = tip.offsetWidth;
+    tip.style.left = `${Math.max(0, mx + 14 + tw > el.clientWidth ? mx - tw - 14 : mx + 14)}px`;
+    tip.style.top = `${Math.max(0, my - 44)}px`;
+  };
+  view.append('g').selectAll('path').data(areaShapes).join('path')
+    .attr('class', 'uk-area')
+    .attr('d', (x) => pathOf(x.rings))
+    .attr('fill-rule', 'evenodd')
+    .style('fill', (x) => { const v = byId.get(x.id)?.[metric]; return v == null ? 'var(--color-border-line)' : ramp(v); })
+    .style('stroke', 'var(--color-panel)').attr('stroke-width', 0.5)
+    .attr('opacity', (x) => (nation === 'all' || byId.get(x.id)?.nation === nation ? 1 : 0.3))
+    .on('click', (_, x) => togglePick(x.id))
+    .on('pointermove', (event, x) => showTip(event, byId.get(x.id)))
+    .on('pointerleave', () => { tip.hidden = true; });
+  view.append('g').attr('pointer-events', 'none').selectAll('path').data(areaShapes.filter((x) => picks.includes(x.id))).join('path')
+    .attr('d', (x) => pathOf(x.rings)).attr('fill', 'none')
+    .style('stroke', (x) => dash.colors[picks.indexOf(x.id)]).attr('stroke-width', 2.5).attr('stroke-linejoin', 'round');
+  const stations = st.data.map((r) => ({ id: r.id, cx: (Number(r.x) - x0) * s, cy: (y1 - Number(r.y)) * s }));
+  const radius = (r) => (picks.includes(r.id) ? 5.5 : 3);
+  const dots = view.append('g').selectAll('circle').data(stations).join('circle')
+    .attr('class', 'uk-stn')
+    .attr('cx', (r) => r.cx).attr('cy', (r) => r.cy)
+    .attr('r', radius)
+    .style('fill', (r) => (picks.includes(r.id) ? 'var(--color-panel)' : 'var(--color-fg)'))
+    .style('stroke', (r) => (picks.includes(r.id) ? dash.colors[picks.indexOf(r.id)] : 'var(--color-panel)'))
+    .attr('stroke-width', (r) => (picks.includes(r.id) ? 3 : 1))
+    .on('click', (_, r) => togglePick(r.id))
+    .on('pointermove', (event, r) => showTip(event, byId.get(r.id)))
+    .on('pointerleave', () => { tip.hidden = true; });
+
+  const controls = document.createElement('div');
+  controls.className = 'uk-zoom';
+  const icon = (d) => `<svg viewBox="0 0 14 14" aria-hidden="true"><path d="${d}" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`;
+  const zbtn = (label, d) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', label);
+    b.title = label;
+    b.innerHTML = icon(d);
+    controls.append(b);
+    return b;
+  };
+  const zin = zbtn('Zoom in', 'M7 2v10M2 7h10');
+  const zout = zbtn('Zoom out', 'M2 7h10');
+  const zreset = zbtn('Show the whole UK', 'M2 5V2h3M9 2h3v3M12 9v3H9M5 12H2V9');
+  const zoom = d3.zoom()
+    .scaleExtent([1, ZOOM_MAX])
+    .translateExtent([[0, 0], [W, H]])
+    .clickDistance(4)
+    // Plain wheel scrolls the page; ctrl/⌘ + wheel (and trackpad pinch, which sends ctrlKey) zooms.
+    // On touch, one finger only pans once zoomed in, so the page still scrolls past the map.
+    .filter((event) => {
+      if (event.type === 'wheel') return event.ctrlKey || event.metaKey;
+      if (event.type === 'touchstart') return event.touches.length > 1 || d3.zoomTransform(svg.node()).k > 1;
+      return !event.button;
+    })
+    .wheelDelta((event) => -event.deltaY * (event.deltaMode === 1 ? 0.05 : event.deltaMode ? 1 : 0.01))
+    .on('zoom', (event) => {
+      const t = event.transform;
+      view.attr('transform', t);
+      dots.attr('r', (r) => radius(r) / t.k);
+      svg.style('touch-action', t.k > 1 ? 'none' : 'pan-y');
+      zin.disabled = t.k >= ZOOM_MAX - 1e-6;
+      zout.disabled = zreset.disabled = t.k <= 1 + 1e-6;
+      mapView = { W, t };
+    });
+  svg.call(zoom).on('dblclick.zoom', null);
+  zin.addEventListener('click', () => svg.transition().duration(250).call(zoom.scaleBy, 2));
+  zout.addEventListener('click', () => svg.transition().duration(250).call(zoom.scaleBy, 0.5));
+  zreset.addEventListener('click', () => svg.transition().duration(250).call(zoom.transform, d3.zoomIdentity));
+  svg.call(zoom.transform, mapView && mapView.W === W ? mapView.t : d3.zoomIdentity);
+  el.replaceChildren(svg.node(), controls, tip);
+
+  const bar = span('uk-ramp', '');
+  bar.style.background = `linear-gradient(to right, ${ramp(vmin)}, ${ramp(vmax)})`;
+  legend.replaceChildren(span('', spec.fmt(vmin)), bar, span('', spec.fmt(vmax)));
+}
+
+dash.onData(() => {
+  drawControls();
+  drawTakeaway();
+  drawChips();
+  drawMap();
+  drawCharts();
+  drawTable();
+});
+</script>
