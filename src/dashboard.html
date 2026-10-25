@@ -169,12 +169,14 @@
             <th data-field="day_long"><button type="button" class="uk-th" data-k="day_long">Longest day<small>21 June</small></button></th>
             <th data-field="day_short"><button type="button" class="uk-th" data-k="day_short">Shortest day<small>21 Dec</small></button></th>
             <th data-field="house"><button type="button" class="uk-th" data-k="house">Detached house<small>typical price</small></button></th>
+            <th data-field="house45" hidden><button type="button" class="uk-th" data-k="house45">4-5 bed detached<small>typical price</small></button></th>
           </tr></thead>
           <tbody></tbody>
         </table>
       </div>
     </div>
     <p class="uk-foot">Weather stations: readings from Met Office climate stations, so each figure is for that exact spot. Some stations have no sunshine recorder. Council areas: the Met Office HadUK-Grid 1991-2020 average over the area's 5 km squares, weighted by how much of each square lies inside it, then shifted to the period picked above using how much the nearest few stations' readings differ from their own 1991-2020 grid values. Council areas larger than about 1,000 km² (52 of them, such as North Yorkshire and Highland) are split into pieces of about that size and named after their biggest town or village. Pieces in hilly country still average mountains, glens and coast together, so the figure may not match where people actually live. Days with rain cover 1991-2020 for every place. Length of day is calculated from latitude. Detached house price: in England and Wales, the median of all detached house sales on the open market from September 2023 to August 2026 (HM Land Registry), placed in each area by postcode; areas with fewer than 30 sales are left blank. Scotland has only a council-wide figure (UK House Price Index), so every piece of a split council shows the same price. Northern Ireland publishes no detached price by council, so its figures are estimates: the Northern Ireland detached price scaled by each council's overall price level. Both are adjusted to match how England and Wales medians compare with the same index. No source records bedrooms, so this covers detached houses of every size.</p>
+    <p class="uk-foot" id="foot-house45" hidden>4-5 bed detached price: the same England and Wales sales, matched by postcode, date and price to Rightmove's sold records to get the number of bedrooms, keeping 4 and 5 bedroom houses (about 80% of sales match with a bedroom count). Scotland uses Rightmove's own 4-5 bedroom detached sold prices from Registers of Scotland, from £40k up. Areas with fewer than 30 such sales use their council's median when that has enough. Rightmove does not cover Northern Ireland.</p>
   </section>
 </div>
 
@@ -240,7 +242,7 @@ dash.calc('climate', {
 
 dash.calc('summary', {
   title: 'Yearly figures by place',
-  description: 'Summer high: mean Jun-Aug daily max. Winter high and low: mean Dec-Feb daily max and min. Rainfall, rain days (1 mm or more, 1991-2020), sunshine and air frosts: sum of the 12 monthly averages. Longest and shortest day from latitude on 21 June and 21 December. House: typical detached house price (areas only), with its basis and number of sales.',
+  description: 'Summer high: mean Jun-Aug daily max. Winter high and low: mean Dec-Feb daily max and min. Rainfall, rain days (1 mm or more, 1991-2020), sunshine and air frosts: sum of the 12 monthly averages. Longest and shortest day from latitude on 21 June and 21 December. House: typical detached house price (areas only), with its basis and number of sales; house45 the same for 4-5 bedroom detached houses where that data is present.',
   inputs: ['climate', 'stations', 'areas', 'houses'],
   fn: (climate, stations, areas, houses) => {
     const house = new Map(houses.map((h) => [h.id, h]));
@@ -271,6 +273,9 @@ dash.calc('summary', {
         house: house.get(p.id)?.price ? Number(house.get(p.id).price) : null,
         house_basis: house.get(p.id)?.basis || null,
         house_sales: house.get(p.id)?.sales ? Number(house.get(p.id).sales) : null,
+        house45: house.get(p.id)?.price45 ? Number(house.get(p.id).price45) : null,
+        house45_basis: house.get(p.id)?.basis45 || null,
+        house45_sales: house.get(p.id)?.sales45 ? Number(house.get(p.id).sales45) : null,
       };
     }));
   },
@@ -283,12 +288,16 @@ const f1 = d3.format('.1f');
 const f0 = d3.format(',.0f');
 const hm = (h) => { const m = Math.round(h * 60); return `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, '0')}m`; };
 const money = (v) => (v >= 995000 ? `£${d3.format('.2~f')(v / 1e6)}m` : `£${Math.round(v / 1000)}k`);
-const FMT = { summer_high: f1, winter_high: f1, winter_low: f1, rain: f0, raindays: f0, sun: f0, frost: f0, day_long: hm, day_short: hm, house: money };
+const FMT = { summer_high: f1, winter_high: f1, winter_low: f1, rain: f0, raindays: f0, sun: f0, frost: f0, day_long: hm, day_short: hm, house: money, house45: money };
+const HOUSE_KEYS = ['house', 'house45'];
 const HOUSE_BASIS = {
-  sales: (r) => `median of ${f0(r.house_sales)} sales, Sep 2023 to Aug 2026`,
+  sales: (n, k) => `median of ${f0(n)} ${k === 'house45' ? '4-5 bed ' : ''}sales, Sep 2023 to Aug 2026`,
+  council: (n, k) => `council-wide median of ${f0(n)} ${k === 'house45' ? '4-5 bed ' : ''}sales, too few in this area`,
   hpi: () => 'council-wide figure, UK House Price Index',
   estimate: () => 'estimate from council price levels',
 };
+const houseNote = (r, k) => HOUSE_BASIS[r[`${k}_basis`]](r[`${k}_sales`], k);
+const houseText = (r, k) => `${r[`${k}_basis`] === 'estimate' ? '~' : ''}${money(r[k])}`;
 const METRICS = {
   sun: { label: 'Sunshine', fmt: (v) => `${f0(v)} hours a year`, none: 'No sunshine recorder' },
   rain: { label: 'Rainfall', fmt: (v) => `${f0(v)} mm a year` },
@@ -296,7 +305,8 @@ const METRICS = {
   summer_high: { label: 'Summer high', fmt: (v) => `${f1(v)}°C` },
   winter_low: { label: 'Winter low', fmt: (v) => `${f1(v)}°C` },
   frost: { label: 'Air frosts', fmt: (v) => `${f0(v)} days a year` },
-  house: { label: 'Detached house price', fmt: money, log: true, clip: [0.02, 0.98], none: 'No house prices for stations' },
+  house: { label: 'Detached house price', fmt: money, log: true, clip: [0.02, 0.98], none: 'No house prices for stations', house: true },
+  house45: { label: '4-5 bed detached price', fmt: money, log: true, clip: [0.02, 0.98], none: 'No house prices for stations', house: true },
 };
 let sortKey = 'sun';
 let sortDir = -1;
@@ -308,7 +318,7 @@ const params = () => {
     period: p.period || '10y',
     nation: p.nation || 'all',
     list: p.list === 'station' ? 'station' : 'area',
-    metric: METRICS[p.metric] ? p.metric : 'sun',
+    metric: METRICS[p.metric] && (p.metric !== 'house45' || has45()) ? p.metric : 'sun',
     picks: Array.isArray(p.picks) ? p.picks : [],
   };
 };
@@ -356,6 +366,12 @@ function span(cls, text, attrs) {
   return s;
 }
 
+// The 4-5 bed price is only in the private build's data; everything for it stays hidden without it.
+function has45() {
+  const s = dash.data('summary');
+  return s.status === 'ok' && s.data.some((r) => r.house45 != null);
+}
+
 function periodRows() {
   const s = dash.data('summary');
   if (s.status !== 'ok') return null;
@@ -375,6 +391,12 @@ function drawControls() {
   for (const [id, v] of [['period-ctl', p.period], ['nation-ctl', p.nation], ['list-ctl', p.list]]) {
     for (const b of document.querySelectorAll(`#${id} button`)) b.setAttribute('aria-pressed', String(b.dataset.v === v));
   }
+  const on45 = has45();
+  let opt = metricSel.querySelector('option[value="house45"]');
+  if (on45 && !opt) metricSel.append(opt = Object.assign(document.createElement('option'), { value: 'house45', textContent: '4-5 bed detached price' }));
+  if (!on45 && opt) opt.remove();
+  document.querySelector('#table th[data-field="house45"]').hidden = !on45;
+  document.getElementById('foot-house45').hidden = !on45;
   metricSel.value = p.metric;
 }
 
@@ -410,6 +432,7 @@ const CARD_STATS = [
   ['frost', 'Frosts', f0],
   ['day_short', 'Shortest day', hm],
   ['house', 'Detached', money],
+  ['house45', '4-5 bed', money],
 ];
 
 function drawChips() {
@@ -437,13 +460,14 @@ function drawChips() {
       const dl = document.createElement('dl');
       dl.className = 'uk-stats';
       for (const [k, label, fmt] of CARD_STATS) {
+        if (k === 'house45' && !has45()) continue;
         const d = document.createElement('div');
         const dt = document.createElement('dt');
         dt.textContent = label;
         const dd = document.createElement('dd');
         if (r[k] == null) dd.append(span('uk-na', 'n/a'));
-        else dd.append(span('', `${k === 'house' && r.house_basis === 'estimate' ? '~' : ''}${fmt(r[k])}`, { 'data-source': 'summary', 'data-field': k, 'data-where': `id=${encodeURIComponent(r.id)}&period=${period}` }));
-        if (k === 'house' && r[k] != null) dd.title = HOUSE_BASIS[r.house_basis](r);
+        else dd.append(span('', HOUSE_KEYS.includes(k) ? houseText(r, k) : fmt(r[k]), { 'data-source': 'summary', 'data-field': k, 'data-where': `id=${encodeURIComponent(r.id)}&period=${period}` }));
+        if (HOUSE_KEYS.includes(k) && r[k] != null) dd.title = houseNote(r, k);
         d.append(dt, dd);
         dl.append(d);
       }
@@ -465,6 +489,7 @@ function drawTable() {
   const maxRain = d3.max(all, (r) => r.rain);
   const maxSun = d3.max(all, (r) => r.sun);
   const { period, picks } = params();
+  const cols = ['summer_high', 'winter_high', 'winter_low', 'rain', 'raindays', 'sun', 'frost', 'day_long', 'day_short', 'house', ...(has45() ? ['house45'] : [])];
   const sorted = rows.filter((r) => !query || r.name.toLowerCase().includes(query)).sort((a, b) => {
     const x = a[sortKey], y = b[sortKey];
     if (x == null) return 1;
@@ -494,12 +519,10 @@ function drawTable() {
     loc.append(span('', r.name), span('', `${r.area} · ${r.nation}`));
     tdName.append(loc);
     tr.append(tdPick, tdName);
-    for (const k of ['summer_high', 'winter_high', 'winter_low', 'rain', 'raindays', 'sun', 'frost', 'day_long', 'day_short', 'house']) {
+    for (const k of cols) {
       const td = document.createElement('td');
-      if (r[k] == null) td.append(span('uk-na', k === 'sun' ? 'no recorder' : k === 'house' && r.kind === 'area' ? 'too few sales' : 'n/a'));
-      else if (k === 'house' && r.house_basis !== 'sales') {
-        td.append(span('', `${r.house_basis === 'estimate' ? '~' : ''}${money(r.house)}`, { title: HOUSE_BASIS[r.house_basis](r) }));
-      }
+      if (r[k] == null) td.append(span('uk-na', k === 'sun' ? 'no recorder' : HOUSE_KEYS.includes(k) && r.kind === 'area' ? 'too few sales' : 'n/a'));
+      else if (HOUSE_KEYS.includes(k) && r[`${k}_basis`] !== 'sales') td.append(span('', houseText(r, k), { title: houseNote(r, k) }));
       else if (k === 'rain' || k === 'sun') {
         const bar = span('uk-bar', '');
         const i = document.createElement('i');
@@ -644,9 +667,9 @@ function drawMapInfo(byId, metric, spec, picks) {
   const head = span('uk-chip-h', '');
   head.append(title, x);
   const v = r[metric];
-  const value = span('uk-info-v', v == null ? (spec.none && r.kind === 'station' ? spec.none : metric === 'house' ? 'Too few sales for a price' : 'No reading') : `${spec.label}: ${spec.fmt(v)}`);
+  const value = span('uk-info-v', v == null ? (spec.none && r.kind === 'station' ? spec.none : spec.house ? 'Too few sales for a price' : 'No reading') : `${spec.label}: ${spec.fmt(v)}`);
   el.replaceChildren(head, value);
-  if (metric === 'house' && v != null) el.append(span('uk-info-note', HOUSE_BASIS[r.house_basis](r)));
+  if (spec.house && v != null) el.append(span('uk-info-note', houseNote(r, metric)));
   const pi = picks.indexOf(r.id);
   const add = document.createElement('button');
   add.type = 'button';
@@ -704,9 +727,9 @@ function drawMap() {
     head.className = 'uk-tip-h';
     head.textContent = r ? `${r.name}${r.kind === 'station' ? ' · station' : ''}` : '';
     const line = document.createElement('div');
-    line.textContent = v == null ? (spec.none && r?.kind === 'station' ? spec.none : metric === 'house' ? 'Too few sales' : 'No reading') : `${spec.label}: ${spec.fmt(v)}`;
+    line.textContent = v == null ? (spec.none && r?.kind === 'station' ? spec.none : spec.house ? 'Too few sales' : 'No reading') : `${spec.label}: ${spec.fmt(v)}`;
     tip.replaceChildren(head, line);
-    if (metric === 'house' && v != null) tip.append(span('uk-tip-h', HOUSE_BASIS[r.house_basis](r)));
+    if (spec.house && v != null) tip.append(span('uk-tip-h', houseNote(r, metric)));
     tip.hidden = false;
     const [mx, my] = d3.pointer(event, el);
     const tw = tip.offsetWidth;

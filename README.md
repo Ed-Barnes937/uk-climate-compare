@@ -14,6 +14,7 @@ python3 build.py
 | `src/standalone.js` | Small runtime the dashboard calls (`dash.calc`, `dash.data`, `dash.params`, ...): embedded datasets, picks and filters saved in `localStorage` |
 | `src/theme.css` | Colour, spacing and type tokens, light and dark |
 | `data/` | Prepared datasets (below) |
+| `private.html` | Password-protected build (StatiCrypt) with an extra 4-5 bed detached price layer from data that is not in this repo. `build.py` makes it when `data/private/` is present, using the password stored in the macOS Keychain under `uk-climate-compare-private`. |
 | `scripts/` | The scripts that prepared `data/`, kept for reference. They expect the raw downloads (Met Office station files, HadUK-Grid netCDF, ONS boundaries, OpenStreetMap places) next to them and are not a one-command pipeline. |
 
 ## Method
