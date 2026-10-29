@@ -1,0 +1,13 @@
+/* Link preview cards, drawn at 1200x630 by build.py --previews. Always the light theme. */
+:root { color-scheme: light; }
+body { margin: 0; }
+.preview { width: 1200px; height: 630px; display: flex; align-items: center; gap: 48px; padding: 0 64px 0 80px; background: #f6f5f1; color: #1f1e1c; overflow: hidden; }
+.preview-text { flex: 1; }
+.preview-site { margin: 0 0 20px; font-size: 26px; color: #d9622b; font-weight: 600; letter-spacing: 0.02em; }
+.preview h1 { margin: 0 0 24px; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 68px; line-height: 1.08; }
+.preview-desc { margin: 0; font-size: 28px; line-height: 1.4; color: #6b6862; }
+.preview-lock { margin: 28px 0 0; display: inline-block; font-size: 22px; color: #d9622b; border: 2px solid currentColor; border-radius: 999px; padding: 4px 18px; }
+.preview-map { height: 590px; flex: none; }
+.preview-map svg { height: 100%; width: auto; display: block; }
+.thumb { width: 480px; height: 300px; display: flex; justify-content: center; align-items: center; background: #f6f5f1; }
+.thumb svg { height: 280px; width: auto; }

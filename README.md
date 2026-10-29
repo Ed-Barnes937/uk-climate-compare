@@ -1,18 +1,27 @@
-# UK Climate Compare
+# UK House Dashboards
 
-Compare average weather across UK council areas and Met Office climate stations: summer and winter temperatures, rainfall, days with rain, sunshine, air frosts and day length, for 2016-2025 or 2006-2025.
+Dashboards for choosing where to live in the UK, served at https://ed-barnes937.github.io/uk-house-dashboards/.
 
-`index.html` is one self-contained page (d3 and all data inlined). It is generated, so edit the sources and rebuild:
+The main one here is UK Climate Compare: average weather across UK council areas and Met Office climate stations (summer and winter temperatures, rainfall, days with rain, sunshine, air frosts and day length, for 2016-2025 or 2006-2025).
+
+The pages are generated, so edit the sources and rebuild:
 
 ```sh
-python3 build.py
+python3 build.py              # index.html, climate.html and (with data/private/) private.html
+python3 build.py --previews   # also redraw the link preview images in previews/ (needs Google Chrome)
 ```
+
+To add a dashboard, add an entry to `DASHBOARDS` in `build.py` (the hub lists them in order, and each gets a preview image), then rebuild with `--previews`.
 
 | Path | What |
 | --- | --- |
+| `index.html` | The hub: a card per dashboard in `DASHBOARDS` |
+| `climate.html` | UK Climate Compare: one self-contained page (d3 and all data inlined) |
+| `previews/` | Link preview images (1200x630, `<slug>.png`) and the hub's map thumbnails (`<slug>-map.png`), drawn from public data only. Every page carries Open Graph tags pointing at its image; on the encrypted pages they are added to the password screen, which is all a link preview can see |
 | `src/dashboard.html` | The dashboard: markup, styles, calcs and drawing |
 | `src/standalone.js` | Small runtime the dashboard calls (`dash.calc`, `dash.data`, `dash.params`, ...): embedded datasets, picks and filters saved in `localStorage` |
 | `src/theme.css` | Colour, spacing and type tokens, light and dark |
+| `src/hub.css`, `src/preview.css` | Styles for the hub and the preview images |
 | `data/` | Prepared datasets (below) |
 | `private.html` | Password-protected build (StatiCrypt) with an extra 4-5 bed detached price layer from data that is not in this repo. `build.py` makes it when `data/private/` is present, using the password stored in the macOS Keychain under `uk-climate-compare-private`. |
 | `houses.html` | Password-protected detached house prices dashboard, linked from the private page's footer. Built and encrypted (same salt and password, so "Remember me" carries across) by the private uk-house-history repo's `build.py --real --publish`; do not edit it here. |
