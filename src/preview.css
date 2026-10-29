@@ -11,3 +11,8 @@ body { margin: 0; }
 .preview-map svg { height: 100%; width: auto; display: block; }
 .thumb { width: 480px; height: 300px; display: flex; justify-content: center; align-items: center; background: #f6f5f1; }
 .thumb svg { height: 280px; width: auto; }
+/* Next Move Planner's own palette (its --bg, --accent, --muted). */
+.preview.green, .thumb.green { background: #F3F5F2; }
+.preview.green .preview-site { color: #1E6B57; }
+.preview.green .preview-desc { color: #5B6862; }
+.thumb.green svg { height: 250px; }
