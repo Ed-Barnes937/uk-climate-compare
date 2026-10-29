@@ -25,12 +25,16 @@ STATICRYPT = 'staticrypt@3.5.4'
 SITE = 'https://ed-barnes937.github.io/uk-house-dashboards/'
 SITE_TITLE = 'House moving helpers'
 SITE_DESCRIPTION = 'Tools for planning a move in the UK: where to live and what it costs.'
-# The hub lists these in order, except hidden ones (still built and shareable, just not listed). houses.html is built by the private uk-house-history repo, which adds the
+# The hub lists these in order, except hidden ones (still built and shareable, just not listed).
+# planner.html is hand-written (it was the next-move-planner repo); build.py only keeps its preview tags current. houses.html is built by the private uk-house-history repo, which adds the
 # same preview tags itself (keep its title and description in step with this entry).
 DASHBOARDS = [
     {'slug': 'climate', 'file': 'climate.html', 'title': 'UK Climate Compare', 'locked': False, 'hidden': True,
      'description': 'Compare average weather across UK council areas and Met Office stations: temperature, rain, '
                     'rain days, sunshine, frost and day length.'},
+    {'slug': 'planner', 'file': 'planner.html', 'title': 'Next Move Planner', 'locked': False, 'theme': 'green',
+     'description': 'Plan selling your home and buying the next: deposit, stamp duty, borrowing and mortgage '
+                    'deals compared by true cost.'},
     {'slug': 'climate-private', 'file': 'private.html', 'title': 'UK Climate Compare (private)', 'locked': True,
      'description': 'The climate dashboard with an extra layer of 4-5 bed detached house prices.'},
     {'slug': 'houses', 'file': 'houses.html', 'title': 'UK House Prices', 'locked': True,
@@ -139,6 +143,18 @@ def hub():
 """
 
 
+PREVIEW_MARKERS = ('<!-- preview tags: written by build.py -->', '<!-- /preview tags -->')
+
+
+def update_preview_tags(d):
+    """Rewrite the preview tags between the markers in a hand-written page."""
+    text = read(d['file'])
+    start, end = PREVIEW_MARKERS
+    assert text.count(start) == 1 and text.count(end) == 1, f"{d['file']}: expected one {start} ... {end} block"
+    before, rest = text.split(start)
+    write(d['file'], before + start + dashboard_social(d) + '\n' + end + rest.split(end)[1])
+
+
 def write(path, text):
     (ROOT / path).write_text(text, encoding='utf-8')
     print(f'{path}: {len(text.encode()) / 1024:.0f} KiB')
@@ -203,6 +219,8 @@ def previews():
         return colour
 
     def svg(kind):
+        if kind == 'planner':
+            return read('src/calculator.svg')
         values, stops = shading.get(kind, ({}, []))
         colour = ramp(values, stops) if values else None
         paths = []
@@ -215,6 +233,7 @@ def previews():
 
     cards = [('hub', SITE_TITLE, SITE_DESCRIPTION, False, 'houses')]
     cards += [(d['slug'], d['title'], d['description'], d['locked'], d['slug'].split('-')[0]) for d in DASHBOARDS]
+    theme = {d['slug']: d.get('theme', '') for d in DASHBOARDS}
     chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
     (ROOT / 'previews').mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='previews-') as tmp:
@@ -223,7 +242,7 @@ def previews():
             card.write_text(f"""<!doctype html><meta charset="utf-8"><style>
 {read('src/theme.css')}
 {read('src/preview.css')}
-</style><div class="preview"><div class="preview-text">
+</style><div class="preview {theme.get(slug, '')}"><div class="preview-text">
 <p class="preview-site">{SITE_TITLE if slug != 'hub' else 'ed-barnes937.github.io'}</p>
 <h1>{html.escape(title)}</h1><p class="preview-desc">{html.escape(description)}</p>
 {'<p class="preview-lock">Password protected</p>' if locked else ''}</div>
@@ -237,7 +256,7 @@ def previews():
                 continue
             # The hub's thumbnail: the map alone, since the hub prints the title and description beside it.
             card.write_text(f"""<!doctype html><meta charset="utf-8"><style>{read('src/preview.css')}</style>
-<div class="thumb">{svg(kind)}</div>""", encoding='utf-8')
+<div class="thumb {theme.get(slug, '')}">{svg(kind)}</div>""", encoding='utf-8')
             out = ROOT / 'previews' / f'{slug}-map.png'
             subprocess.run([chrome, '--headless=new', '--hide-scrollbars', '--force-device-scale-factor=2',
                             '--force-color-profile=srgb', '--window-size=480,300', f'--screenshot={out}', card.as_uri()],
@@ -248,4 +267,5 @@ if '--previews' in sys.argv[1:]:
     previews()
 write('index.html', hub())
 write('climate.html', page(DATASETS, 'UK Climate Compare', dashboard_social(dashboard('climate'))))
+update_preview_tags(dashboard('planner'))
 build_private()

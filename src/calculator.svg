@@ -1,0 +1,28 @@
+<svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
+  <!-- Next Move Planner preview: a calculator in the planner's greens (its --accent, --accent-soft, --surface-2, --seg2). -->
+  <rect x="10" y="10" width="280" height="400" rx="30" fill="#1E6B57"/>
+  <rect x="34" y="36" width="232" height="96" rx="14" fill="#D6E9E1"/>
+  <path d="M58 76 l18 -15 18 15 v22 h-36z" fill="none" stroke="#1E6B57" stroke-width="5" stroke-linejoin="round"/>
+  <rect x="71" y="84" width="10" height="14" fill="#1E6B57"/>
+  <text x="246" y="86" text-anchor="end" font-family="Menlo, ui-monospace, monospace" font-size="34" font-weight="600" fill="#17201C">£1,245</text>
+  <text x="246" y="112" text-anchor="end" font-family="Menlo, ui-monospace, monospace" font-size="16" fill="#5B6862">a month</text>
+  <g fill="#E9EDE8">
+    <rect x="34" y="156" width="50" height="50" rx="10"/><rect x="94" y="156" width="50" height="50" rx="10"/><rect x="154" y="156" width="50" height="50" rx="10"/>
+    <rect x="34" y="216" width="50" height="50" rx="10"/><rect x="94" y="216" width="50" height="50" rx="10"/><rect x="154" y="216" width="50" height="50" rx="10"/>
+    <rect x="34" y="276" width="50" height="50" rx="10"/><rect x="94" y="276" width="50" height="50" rx="10"/><rect x="154" y="276" width="50" height="50" rx="10"/>
+    <rect x="34" y="336" width="110" height="50" rx="10"/><rect x="154" y="336" width="50" height="50" rx="10"/>
+  </g>
+  <g fill="#4FB394">
+    <rect x="216" y="156" width="50" height="50" rx="10"/><rect x="216" y="216" width="50" height="50" rx="10"/>
+  </g>
+  <rect x="216" y="276" width="50" height="110" rx="10" fill="#C08A2B"/>
+  <g font-family="Menlo, ui-monospace, monospace" font-size="24" font-weight="600" text-anchor="middle" fill="#17201C">
+    <text x="59" y="190">7</text><text x="119" y="190">8</text><text x="179" y="190">9</text>
+    <text x="59" y="250">4</text><text x="119" y="250">5</text><text x="179" y="250">6</text>
+    <text x="59" y="310">1</text><text x="119" y="310">2</text><text x="179" y="310">3</text>
+    <text x="89" y="370">0</text><text x="179" y="370">.</text>
+  </g>
+  <g font-family="Menlo, ui-monospace, monospace" font-size="26" font-weight="600" text-anchor="middle" fill="#FFFFFF">
+    <text x="241" y="190">%</text><text x="241" y="250">£</text><text x="241" y="340">=</text>
+  </g>
+</svg>

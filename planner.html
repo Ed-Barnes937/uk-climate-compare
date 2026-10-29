@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<!-- preview tags: written by build.py -->
+<meta name="description" content="Plan selling your home and buying the next: deposit, stamp duty, borrowing and mortgage deals compared by true cost.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="House moving helpers">
+<meta property="og:title" content="Next Move Planner">
+<meta property="og:description" content="Plan selling your home and buying the next: deposit, stamp duty, borrowing and mortgage deals compared by true cost.">
+<meta property="og:url" content="https://ed-barnes937.github.io/uk-house-dashboards/planner.html">
+<meta property="og:image" content="https://ed-barnes937.github.io/uk-house-dashboards/previews/planner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- /preview tags -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Next Move Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F3F5F2; --surface:#FFFFFF; --surface-2:#E9EDE8; --ink:#17201C; --muted:#5B6862; --line:#D3DAD4;
+  --accent:#1E6B57; --accent-ink:#FFFFFF; --accent-soft:#D6E9E1;
+  --good:#1E7A4A; --good-soft:#DCEFE3; --warn:#9A6200; --warn-soft:#F7EACB; --bad:#B23A2E; --bad-soft:#F6DDDA;
+  --seg1:#1E6B57; --seg2:#C08A2B; --seg3:#7B8C85; --seg4:#5E7FB8;
+  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#111714; --surface:#18201C; --surface-2:#212B26; --ink:#E6ECE8; --muted:#97A59E; --line:#2E3A34;
+    --accent:#4FB394; --accent-ink:#0C1411; --accent-soft:#1D3A30;
+    --good:#5CC48A; --good-soft:#183526; --warn:#E3AE4E; --warn-soft:#3A2E14; --bad:#EF7E70; --bad-soft:#3E1F1B;
+    --seg1:#4FB394; --seg2:#E0AA4B; --seg3:#8A9B94; --seg4:#86A6DE;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#111714; --surface:#18201C; --surface-2:#212B26; --ink:#E6ECE8; --muted:#97A59E; --line:#2E3A34;
+  --accent:#4FB394; --accent-ink:#0C1411; --accent-soft:#1D3A30;
+  --good:#5CC48A; --good-soft:#183526; --warn:#E3AE4E; --warn-soft:#3A2E14; --bad:#EF7E70; --bad-soft:#3E1F1B;
+  --seg1:#4FB394; --seg2:#E0AA4B; --seg3:#8A9B94; --seg4:#86A6DE;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;padding:0 16px}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:30px;font-weight:700;letter-spacing:-.01em}
+h2{font-size:20px;font-weight:700}
+h3{font-size:15px;font-weight:700;font-family:var(--body)}
+p{margin:0}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
+header p{max-width:62ch}
+#saveState{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+#saveState::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--muted)}
+#saveState[data-s="saved"]::before{background:var(--good)}
+#saveState[data-s="saving"]::before{background:var(--warn)}
+
+.grid{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:880px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:18px}
+.inputs{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
+@media (max-width:880px){.inputs{position:static}}
+fieldset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+fieldset+fieldset{border-top:1px solid var(--line);padding-top:16px}
+legend{padding:0;margin-bottom:4px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:13px;font-weight:600}
+.field .hint{font-size:12px;color:var(--muted)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.money{display:flex;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:6px}
+.money:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+.money span{padding:0 0 0 10px;color:var(--muted);font-family:var(--mono);font-size:14px}
+.money span.suf{padding:0 10px 0 0}
+input,select,textarea{font:inherit;color:var(--ink)}
+.money input{border:0;background:transparent;padding:8px 10px;width:100%;min-width:0;font-family:var(--mono);font-size:14px;outline:none}
+input[type=text].plain,textarea{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%}
+input[type=text].plain:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+input[type=range]{width:100%;accent-color:var(--accent);margin:4px 0}
+
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--surface-2);border-radius:8px;padding:3px;gap:3px}
+.seg button{font:inherit;font-size:13px;font-weight:600;border:0;border-radius:6px;padding:7px 8px;background:transparent;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.dial .money{background:var(--surface)}
+.dial .derived{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-top:1px solid var(--line);padding-top:8px;margin-top:2px}
+.dial{background:var(--accent-soft);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.dial .big{font-family:var(--display);font-size:26px;font-weight:700}
+.dial-scale{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:var(--mono)}
+details.more summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--accent)}
+details.more[open] summary{margin-bottom:12px}
+details.more>div{display:flex;flex-direction:column;gap:12px}
+
+.verdict{padding:22px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:16px}
+.verdict[data-v="yes"]{border-color:var(--good);box-shadow:inset 4px 0 0 var(--good)}
+.verdict[data-v="no"]{border-color:var(--bad);box-shadow:inset 4px 0 0 var(--bad)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.pill.good{background:var(--good-soft);color:var(--good)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.neutral{background:var(--surface-2);color:var(--muted)}
+.verdict h2{font-size:26px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+@media (max-width:620px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.stat .v{font-family:var(--mono);font-size:19px;font-weight:500;font-variant-numeric:tabular-nums}
+.stat .s{font-size:12px;color:var(--muted)}
+
+.bar{display:flex;height:34px;border-radius:6px;overflow:hidden;background:var(--surface-2)}
+.bar div{height:100%;min-width:2px;transition:flex-basis .25s}
+@media (prefers-reduced-motion:reduce){.bar div{transition:none}}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.legend .k{display:flex;gap:8px;align-items:flex-start}
+.legend .sw{width:10px;height:10px;border-radius:2px;margin-top:5px;flex:none}
+.legend .t{font-size:12px;color:var(--muted)}
+.legend .n{font-family:var(--mono);font-size:14px}
+.sources{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px}
+
+.levers{display:flex;flex-direction:column;gap:0}
+.lever{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line);align-items:start}
+.lever:first-child{border-top:0;padding-top:0}
+.lever .ic{width:28px;height:28px;border-radius:6px;background:var(--surface-2);display:grid;place-items:center;font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:500}
+.lever b{font-weight:700}
+
+.section-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
+.btn{font:inherit;font-size:14px;font-weight:600;border-radius:6px;padding:8px 14px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn:hover{border-color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.link{border:0;background:none;padding:4px 6px;color:var(--accent);font-size:13px}
+.btn.link.danger{color:var(--bad)}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:860px;font-size:14px}
+th,td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--surface-2);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+tr:last-child td{border-bottom:0}
+td.num{white-space:nowrap}
+tr.ineligible td{color:var(--muted)}
+tr.chosen td{background:var(--accent-soft)}
+tr.chosen td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:var(--surface-2)}
+tbody tr.chosen:hover td{background:var(--accent-soft)}
+td.pick{width:44px;text-align:center;padding-right:0}
+td.pick input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer;margin:2px 0 0}
+.chosen-deal{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.chosen-deal .head{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 16px}
+@media (max-width:620px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.facts .t{font-size:12px;color:var(--muted)}
+.facts .n{font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums}
+.deal-name{font-weight:700}
+.deal-sub{font-size:12px;color:var(--muted)}
+.notes{font-size:12px;color:var(--muted);max-width:28ch;white-space:normal}
+.acts{white-space:nowrap}
+.banner{font-size:13px;padding:10px 14px;border-radius:8px;background:var(--warn-soft);color:var(--ink);display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+
+form.deal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+form.deal .wide{grid-column:span 2}
+form.deal .full{grid-column:1/-1}
+@media (max-width:720px){form.deal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.form-acts{display:flex;gap:8px;justify-content:flex-end;grid-column:1/-1}
+.err{color:var(--bad);font-size:13px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.foot{font-size:12px;color:var(--muted);max-width:80ch;display:flex;flex-direction:column;gap:6px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span class="label">Selling up and buying again · England &amp; NI</span>
+      <h1>Next Move Planner</h1>
+      <p class="muted">It starts with example figures. Replace them with yours on the left and everything updates. Your figures and the deals you add are saved in this browser only. Other browsers and devices keep their own copy.</p>
+    </div>
+    <div id="saveState" data-s="saved">Saved in this browser</div>
+  </header>
+
+  <div class="grid">
+    <!-- Inputs -->
+    <form class="panel inputs" id="inputs" autocomplete="off" onsubmit="return false">
+      <fieldset>
+        <legend class="label">The new home</legend>
+        <div class="field">
+          <label for="price">Purchase price</label>
+          <div class="money"><span>£</span><input id="price" inputmode="numeric" data-k="price"></div>
+          <input type="range" id="priceRange" min="150000" max="1000000" step="5000" aria-label="Purchase price slider">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="label">Income</legend>
+        <div class="row2">
+          <div class="field">
+            <label for="salary1">Your salary</label>
+            <div class="money"><span>£</span><input id="salary1" inputmode="numeric" data-k="salary1"></div>
+          </div>
+          <div class="field">
+            <label for="salary2">Partner's salary</label>
+            <div class="money"><span>£</span><input id="salary2" inputmode="numeric" data-k="salary2"></div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="multiple">Lender income multiple</label>
+          <div class="money"><input id="multiple" inputmode="decimal" data-k="multiple"><span class="suf">× salary</span></div>
+          <span class="hint">Most lenders cap at 4.5×. Some go to 5× or more for higher earners.</span>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="label">Your current home</legend>
+        <div class="row2">
+          <div class="field">
+            <label for="saleValue">Expected sale price</label>
+            <div class="money"><span>£</span><input id="saleValue" inputmode="numeric" data-k="saleValue"></div>
+          </div>
+          <div class="field">
+            <label for="owed">Mortgage left to pay</label>
+            <div class="money"><span>£</span><input id="owed" inputmode="numeric" data-k="owed"></div>
+          </div>
+        </div>
+        <span class="hint small" id="equityHint"></span>
+      </fieldset>
+
+      <fieldset>
+        <legend class="label">Savings</legend>
+        <div class="field">
+          <label for="savings">Total savings</label>
+          <div class="money"><span>£</span><input id="savings" inputmode="numeric" data-k="savings"></div>
+        </div>
+        <div class="field">
+          <span class="small" style="font-weight:600" id="modeLabel">Choose which one you set</span>
+          <div class="seg" role="group" aria-labelledby="modeLabel">
+            <button type="button" id="modeKeep" data-mode="keep">Savings to keep</button>
+            <button type="button" id="modeDeposit" data-mode="deposit">Deposit</button>
+          </div>
+          <span class="hint">The other is worked out for you. Whatever isn't spent on deposit, stamp duty and moving costs stays in savings.</span>
+        </div>
+        <div class="dial" id="keepDial">
+          <label for="keep" class="label" style="color:var(--accent)">Keep back in savings</label>
+          <div class="big num" id="keepOut">£0</div>
+          <input type="range" id="keep" min="0" max="0" step="500">
+          <div class="dial-scale"><span>£0</span><span id="keepMax">£0</span></div>
+          <div class="derived small"><span class="muted">Deposit this gives you</span><b class="num" id="keepDeposit">£0</b></div>
+          <div class="derived small"><span class="muted">Loan to value</span><b class="num" id="keepLtv">-</b></div>
+          <span class="small muted" id="keepBand"></span>
+          <span class="small" id="keepHint"></span>
+        </div>
+        <div class="dial" id="depositDial" hidden>
+          <label for="deposit" class="label" style="color:var(--accent)">Deposit to put down</label>
+          <div class="money"><span>£</span><input id="deposit" inputmode="numeric" data-k="deposit"></div>
+          <input type="range" id="depositRange" min="0" max="0" step="1000" aria-label="Deposit slider">
+          <div class="dial-scale"><span>£0</span><span id="depositMax">£0</span></div>
+          <div class="derived small"><span class="muted">Loan to value</span><b class="num" id="depositLtv">-</b></div>
+          <span class="small muted" id="depositBand"></span>
+          <div class="derived small"><span class="muted">Left in savings</span><b class="num" id="depositKeep">£0</b></div>
+          <span class="small" id="depositHint"></span>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <details class="more" id="moreDetails">
+          <summary>Moving costs and mortgage term</summary>
+          <div>
+            <div class="row2">
+              <div class="field">
+                <label for="agentPct">Estate agent fee</label>
+                <div class="money"><input id="agentPct" inputmode="decimal" data-k="agentPct"><span class="suf">% inc VAT</span></div>
+              </div>
+              <div class="field">
+                <label for="termYears">Mortgage term</label>
+                <div class="money"><input id="termYears" inputmode="numeric" data-k="termYears"><span class="suf">years</span></div>
+              </div>
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label for="legal">Legal and survey</label>
+                <div class="money"><span>£</span><input id="legal" inputmode="numeric" data-k="legal"></div>
+                <span class="hint">Selling and buying</span>
+              </div>
+              <div class="field">
+                <label for="other">Removals and other</label>
+                <div class="money"><span>£</span><input id="other" inputmode="numeric" data-k="other"></div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="planRate">Planning rate</label>
+              <div class="money"><input id="planRate" inputmode="decimal" data-k="planRate"><span class="suf">%</span></div>
+              <span class="hint">Used for the monthly estimate until you add a deal you qualify for.</span>
+            </div>
+          </div>
+        </details>
+      </fieldset>
+    </form>
+
+    <!-- Results -->
+    <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+      <section class="verdict" id="verdict" aria-live="polite">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span id="verdictPill" class="pill neutral">Checking</span>
+          <h2 id="verdictTitle">Working it out</h2>
+          <p class="muted" id="verdictText"></p>
+        </div>
+        <div class="stats">
+          <div class="stat"><span class="label">Deposit</span><span class="v" id="sDeposit">-</span><span class="s" id="sDepositPct"></span></div>
+          <div class="stat"><span class="label">Mortgage needed</span><span class="v" id="sLoan">-</span><span class="s" id="sLtv"></span></div>
+          <div class="stat"><span class="label">Max you can borrow</span><span class="v" id="sMax">-</span><span class="s" id="sMaxSub"></span></div>
+          <div class="stat"><span class="label">Monthly payment</span><span class="v" id="sMonthly">-</span><span class="s" id="sMonthlySub"></span></div>
+        </div>
+        <div class="chosen-deal" id="chosenDeal"></div>
+      </section>
+
+      <section class="panel">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h2>Where the money goes</h2>
+          <p class="sources muted" id="sources"></p>
+        </div>
+        <div class="bar" id="bar" role="img" aria-label="Breakdown of your cash"></div>
+        <div class="legend" id="legend"></div>
+      </section>
+
+      <section class="panel">
+        <h2 id="leversTitle">Ways to make it work</h2>
+        <div class="levers" id="levers"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Mortgages -->
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <div class="section-head">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <h2>Compare mortgage deals</h2>
+        <p class="muted small" style="max-width:70ch">Every deal is costed on your current mortgage amount. Click a deal to use it for your monthly figures. Ranked by <b>true cost per year</b>: interest plus fees minus cashback over the fixed period, divided by its length. That makes 2 and 5 year fixes comparable.</p>
+      </div>
+      <button class="btn primary" id="addBtn" type="button">Add a deal</button>
+    </div>
+
+    <form class="panel deal" id="dealForm" hidden>
+      <div class="field wide"><label for="fLender">Lender</label><input type="text" class="plain" id="fLender" required placeholder="e.g. Nationwide"></div>
+      <div class="field wide"><label for="fProduct">Product</label><input type="text" class="plain" id="fProduct" placeholder="e.g. 5 year fixed, remortgage"></div>
+      <div class="field"><label for="fRate">Initial rate</label><div class="money"><input id="fRate" inputmode="decimal" required placeholder="4.29"><span class="suf">%</span></div></div>
+      <div class="field"><label for="fYears">Fixed for</label><div class="money"><input id="fYears" inputmode="decimal" required placeholder="5"><span class="suf">years</span></div></div>
+      <div class="field"><label for="fFee">Product fee</label><div class="money"><span>£</span><input id="fFee" inputmode="numeric" placeholder="999"></div></div>
+      <div class="field"><label for="fCashback">Cashback</label><div class="money"><span>£</span><input id="fCashback" inputmode="numeric" placeholder="0"></div></div>
+      <div class="field"><label for="fLtv">Max LTV</label><div class="money"><input id="fLtv" inputmode="numeric" required placeholder="85"><span class="suf">%</span></div></div>
+      <div class="field"><label for="fSvr">Rate after the fix</label><div class="money"><input id="fSvr" inputmode="decimal" placeholder="7.49"><span class="suf">%</span></div></div>
+      <div class="field wide"><label for="fErc">Early repayment charges</label><input type="text" class="plain" id="fErc" placeholder="e.g. 5%, 4%, 3%, 2%, 1%"></div>
+      <div class="field full"><label for="fNotes">Notes</label><input type="text" class="plain" id="fNotes" placeholder="Portable? Overpayment allowance? Broker comments"></div>
+      <div class="form-acts">
+        <span class="err" id="formErr"></span>
+        <button class="btn" type="button" id="cancelBtn">Cancel</button>
+        <button class="btn primary" type="submit" id="saveDealBtn">Save deal</button>
+      </div>
+    </form>
+
+    <div class="banner" id="exampleBanner" hidden>
+      <span>These are <b>example deals</b> to show how the comparison works. Add your own and they disappear.</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="sr">Use</span></th><th>Deal</th><th>Rate</th><th>Fixed</th><th>Fees</th><th>Max LTV</th><th>Monthly</th><th>Cost over fix</th><th>Cost per year</th><th>After fix</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="dealRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="foot">
+    <p>Stamp duty uses England and Northern Ireland rates for home movers from April 2025 (0% to £125k, 2% to £250k, 5% to £925k, 10% to £1.5m, 12% above). Scotland and Wales use different taxes. Lenders run their own affordability checks on spending and credit, so the income multiple is a guide, not a promise.</p>
+    <p>Assumes a repayment mortgage, product fees paid upfront, and your current mortgage repaid in full on sale. Early repayment charges on your current deal are not included: add them to "Removals and other" if you'd be leaving a fix early.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  const DEFAULTS = {price:450000, salary1:90000, salary2:0, multiple:4.5, saleValue:350000, owed:180000, savings:60000, keep:15000, agentPct:1.2, legal:3000, other:1500, termYears:25, planRate:4.5, selectedDealId:null, mode:"keep", deposit:100000};
+  const EXAMPLES = [
+    {id:"ex1", lender:"Example lender A", product:"2 year fixed", rate:3.89, fixYears:2, fee:1499, cashback:0, maxLtv:60, svr:7.49, erc:"2%, 1%", notes:"Lowest rate, needs a big deposit"},
+    {id:"ex2", lender:"Example lender B", product:"2 year fixed", rate:4.09, fixYears:2, fee:999, cashback:0, maxLtv:75, svr:7.49, erc:"2%, 1%", notes:""},
+    {id:"ex3", lender:"Example lender C", product:"5 year fixed", rate:4.29, fixYears:5, fee:0, cashback:500, maxLtv:85, svr:7.24, erc:"5%, 4%, 3%, 2%, 1%", notes:"No fee"},
+    {id:"ex4", lender:"Example lender D", product:"5 year fixed", rate:4.49, fixYears:5, fee:999, cashback:0, maxLtv:90, svr:7.24, erc:"5%, 4%, 3%, 2%, 1%", notes:""}
+  ];
+  const LTV_BANDS = [60,75,80,85,90,95];
+
+  let S = Object.assign({}, DEFAULTS);
+  let deals = [];           // from db
+  let usingExamples = true;
+  let saveTimer = null;
+  let editingId = null, confirmDelete = null;
+
+  const $ = id => document.getElementById(id);
+  const gbp = n => (n < 0 ? "-£" : "£") + Math.round(Math.abs(n)).toLocaleString("en-GB");
+  const gbpK = n => { const a = Math.abs(n); const s = n < 0 ? "-" : ""; return a >= 1e6 ? s+"£"+(a/1e6).toFixed(2)+"m" : a >= 1e4 ? s+"£"+Math.round(a/1000)+"k" : gbp(n); };
+  const pct = (n, d=0) => (n*100).toFixed(d) + "%";
+  const parseNum = v => { const n = parseFloat(String(v).replace(/[£,%\s]/g, "")); return isFinite(n) ? n : 0; };
+  const fmtInput = (k, v) => ["multiple","agentPct","planRate"].includes(k) ? String(v) : Math.round(v).toLocaleString("en-GB");
+
+  // ---------- maths ----------
+  function sdlt(p){
+    const bands = [[125000,0],[250000,.02],[925000,.05],[1500000,.10],[Infinity,.12]];
+    let tax = 0, prev = 0;
+    for (const [top, r] of bands){ if (p > prev){ tax += (Math.min(p, top) - prev) * r; } prev = top; }
+    return tax;
+  }
+  function payment(loan, ratePct, years){
+    if (loan <= 0) return 0;
+    const r = ratePct/100/12, n = years*12;
+    return r === 0 ? loan/n : loan*r/(1 - Math.pow(1+r, -n));
+  }
+  function balanceAfter(loan, ratePct, years, months){
+    const r = ratePct/100/12, m = payment(loan, ratePct, years);
+    if (r === 0) return Math.max(0, loan - m*months);
+    const g = Math.pow(1+r, months);
+    return Math.max(0, loan*g - m*(g-1)/r);
+  }
+  // o: {price, keep, deposit} overrides. Mode "keep" fixes savings kept; mode "deposit" fixes the deposit.
+  function scenario(s, o = {}){
+    const price = o.price ?? s.price;
+    const mode = o.keep != null ? "keep" : o.deposit != null ? "deposit" : s.mode;
+    const agentFee = s.saleValue * s.agentPct/100;
+    const equity = s.saleValue - s.owed - agentFee;
+    const stamp = sdlt(price);
+    const fees = s.legal + s.other;
+    const spare = equity + s.savings - stamp - fees;   // cash after costs, before deposit
+    let deposit, keep, cash;
+    if (mode === "deposit"){
+      deposit = Math.max(0, Math.min(o.deposit ?? s.deposit, price));
+      keep = spare - deposit;
+      cash = keep >= 0 ? deposit : -1;
+    } else {
+      const target = Math.max(0, Math.min(o.keep ?? s.keep, s.savings));
+      cash = spare - target;
+      deposit = Math.max(0, Math.min(cash, price));
+      keep = cash < 0 ? target : spare - deposit;
+    }
+    const loan = price - deposit;
+    const income = s.salary1 + s.salary2;
+    const maxLoan = income * s.multiple;
+    const ltv = price > 0 ? loan/price : 0;
+    const okIncome = loan <= maxLoan + 0.5;
+    const okLtv = ltv <= 0.95 + 1e-9;
+    const okCash = cash >= 0;
+    return {price, mode, keep, spare, agentFee, equity, stamp, fees, cash, deposit, loan, income, maxLoan, ltv, okIncome, okLtv, okCash, ok: okIncome && okLtv && okCash};
+  }
+  function maxPrice(s){
+    let lo = 0, hi = 5e6;
+    if (!scenario(s, {price:1000}).ok) return 0;
+    for (let i=0;i<50;i++){ const mid=(lo+hi)/2; if (scenario(s, {price:mid}).ok) lo=mid; else hi=mid; }
+    return Math.floor(lo/1000)*1000;
+  }
+  function maxKeep(s){
+    // most you can keep in savings while still affording this price
+    if (!scenario(s, {keep:0}).ok) return -1;
+    let lo = 0, hi = s.savings;
+    for (let i=0;i<40;i++){ const mid=(lo+hi)/2; if (scenario(s, {keep:mid}).ok) lo=mid; else hi=mid; }
+    return Math.floor(lo/500)*500;
+  }
+  function costDeal(d, loan, term){
+    const months = Math.round(d.fixYears*12);
+    const m = payment(loan, d.rate, term);
+    const bal = balanceAfter(loan, d.rate, term, months);
+    const interest = m*months - (loan - bal);
+    const total = interest + (d.fee||0) - (d.cashback||0);
+    const remainingYears = Math.max(1/12, term - d.fixYears);
+    const after = d.svr ? payment(bal, d.svr, remainingYears) : null;
+    return {m, bal, interest, total, perYear: total/d.fixYears, after};
+  }
+
+  // ---------- render ----------
+  function render(){
+    const r = scenario(S);
+    const list = usingExamples ? EXAMPLES : deals;
+    const costed = list.map(d => ({d, c: costDeal(d, r.loan, S.termYears), eligible: r.ltv*100 <= d.maxLtv + 1e-9}));
+    const eligible = costed.filter(x => x.eligible).sort((a,b) => a.c.perYear - b.c.perYear);
+    const best = eligible[0];
+
+    // savings / deposit dial
+    const depMode = S.mode === "deposit";
+    $("modeKeep").setAttribute("aria-pressed", String(!depMode));
+    $("modeDeposit").setAttribute("aria-pressed", String(depMode));
+    $("keepDial").hidden = depMode;
+    $("depositDial").hidden = !depMode;
+    const mk = maxKeep(S);
+    const minDep = Math.min(r.price, Math.max(r.price*0.05, r.price - r.maxLoan));
+    const maxDep = Math.max(0, Math.min(r.spare, r.price));
+    // LTV readout with the next lender band down
+    const ltvPct = r.ltv*100;
+    const band = LTV_BANDS.find(b => ltvPct <= b + 1e-9);
+    const lower = [...LTV_BANDS].reverse().find(b => b < ltvPct - 1e-9);
+    const ltvText = r.loan <= 0 ? "No mortgage" : ltvPct.toFixed(1) + "%";
+    const bandText = r.loan <= 0 ? "" :
+      (band ? "In the " + band + "% band. " : "Above 95%, lenders won't offer this. ") +
+      (lower ? gbp(r.loan - r.price*lower/100) + " more deposit gets you to " + lower + "%." : "");
+    $(depMode ? "depositLtv" : "keepLtv").textContent = ltvText;
+    $(depMode ? "depositBand" : "keepBand").textContent = bandText;
+    if (!depMode){
+      const keepEl = $("keep");
+      keepEl.max = Math.max(0, S.savings);
+      if (document.activeElement !== keepEl) keepEl.value = Math.min(S.keep, S.savings);
+      $("keepOut").textContent = gbp(Math.min(S.keep, S.savings));
+      $("keepMax").textContent = gbp(S.savings);
+      $("keepDeposit").textContent = gbp(r.deposit);
+      $("keepHint").textContent = mk < 0 ? "Even using all your savings, this price doesn't work yet."
+        : mk >= S.savings ? "You could keep all of it and still afford this price."
+        : "You can keep up to " + gbp(mk) + " and still afford this price.";
+    } else {
+      const dr = $("depositRange");
+      dr.max = Math.max(1000, Math.ceil(Math.max(maxDep, S.deposit)/1000)*1000);
+      if (document.activeElement !== dr) dr.value = S.deposit;
+      $("depositMax").textContent = gbp(+dr.max);
+      $("depositKeep").textContent = gbp(r.keep);
+      $("depositKeep").style.color = r.keep < 0 ? "var(--bad)" : "";
+      $("depositHint").textContent = r.keep < 0
+        ? "That's " + gbp(-r.keep) + " more than you have after stamp duty and moving costs. The most you can put down is " + gbp(maxDep) + "."
+        : minDep > maxDep ? "You can put down up to " + gbp(maxDep) + ", but this price needs at least " + gbp(minDep) + "."
+        : "For this price, put down between " + gbp(minDep) + " and " + gbp(maxDep) + ".";
+    }
+    $("equityHint").textContent = "Equity after agent fees: " + gbp(r.equity) + " (agent fee " + gbp(r.agentFee) + ")";
+    $("priceRange").value = S.price;
+
+    // verdict
+    const v = $("verdict"), pill = $("verdictPill");
+    const mp = maxPrice(S);
+    const holding = depMode ? "With a " + gbp(S.deposit) + " deposit" : "Keeping " + gbp(r.keep) + " in savings";
+    if (r.ok){
+      v.dataset.v = "yes"; pill.className = "pill good"; pill.textContent = "Affordable";
+      $("verdictTitle").textContent = "Yes, " + gbp(r.price) + " works";
+      $("verdictText").textContent = holding + ", the most you could pay is about " + gbp(mp) + ". You'd have " + gbp(r.maxLoan - r.loan) + " of borrowing headroom.";
+    } else {
+      v.dataset.v = "no"; pill.className = "pill bad"; pill.textContent = "Out of reach";
+      $("verdictTitle").textContent = gbp(r.price) + " doesn't work yet";
+      const why = !r.okCash ? (depMode ? "That deposit plus stamp duty and moving costs comes to " + gbp(-r.keep) + " more than your equity and savings." : "Your equity and savings don't cover stamp duty and moving costs.")
+        : !r.okIncome ? "You'd need to borrow " + gbp(r.loan - r.maxLoan) + " more than lenders are likely to offer."
+        : "Your deposit is under the 5% minimum lenders accept.";
+      $("verdictText").textContent = why + (mp > 0 ? " " + holding + ", the most you could pay is about " + gbp(mp) + "." : "");
+    }
+    $("sDeposit").textContent = gbp(r.deposit);
+    $("sDepositPct").textContent = r.price ? pct(r.deposit/r.price) + " of price" : "";
+    $("sLoan").textContent = gbp(r.loan);
+    $("sLtv").textContent = pct(r.ltv) + " loan to value";
+    $("sMax").textContent = gbp(r.maxLoan);
+    $("sMaxSub").textContent = S.multiple + " × " + gbp(r.income);
+    const picked = costed.find(x => x.d.id === S.selectedDealId) || null;
+    const chosen = picked || best || null;
+    const rateUsed = chosen ? chosen.d.rate : S.planRate;
+    const monthly = payment(r.loan, rateUsed, S.termYears);
+    $("sMonthly").textContent = gbp(monthly);
+    $("sMonthlySub").textContent = picked ? "at " + picked.d.rate + "%, your chosen deal" : best ? "at " + best.d.rate + "%, best value deal" : "at " + S.planRate + "% planning rate";
+    renderChosen(picked, chosen, best, r);
+
+    // money bar
+    const total = Math.max(0, r.equity) + S.savings;
+    $("sources").innerHTML = "From your sale <b class='num'>" + gbp(r.equity) + "</b> + savings <b class='num'>" + gbp(S.savings) + "</b> = <b class='num'>" + gbp(r.equity + S.savings) + "</b>";
+    const segs = [
+      ["Deposit", r.deposit, "--seg1"],
+      ["Stamp duty", r.stamp, "--seg2"],
+      ["Moving costs", r.fees, "--seg3"],
+      ["Kept in savings", Math.max(0, r.keep), "--seg4"]
+    ];
+    const denom = Math.max(total, segs.reduce((a,s)=>a+s[1],0), 1);
+    $("bar").innerHTML = segs.map(s => "<div title='" + s[0] + " " + gbp(s[1]) + "' style='flex:0 0 " + (Math.max(0,s[1])/denom*100) + "%;background:var(" + s[2] + ")'></div>").join("");
+    $("legend").innerHTML = segs.map(s => "<div class='k'><span class='sw' style='background:var(" + s[2] + ")'></span><div><div class='t'>" + s[0] + "</div><div class='n'>" + gbp(s[1]) + "</div></div></div>").join("");
+
+    // levers
+    renderLevers(r, mp, mk, picked, rateUsed);
+
+    // deals
+    renderDeals(costed, best, chosen);
+  }
+
+  function renderChosen(picked, chosen, best, r){
+    const el = $("chosenDeal");
+    if (!chosen){
+      el.innerHTML = "<p class='small muted'>None of the deals in the table are open to you at " + pct(r.ltv) + " LTV. Pick one below to see what it would cost, or add more deals.</p>";
+      return;
+    }
+    const d = chosen.d, c = chosen.c;
+    const tag = picked
+      ? (chosen.eligible ? "<span class='pill good'>Your chosen deal</span>" : "<span class='pill bad'>Chosen, but needs " + d.maxLtv + "% LTV</span>")
+      : "<span class='pill neutral'>Best value, pick another in the table</span>";
+    const reset = picked && best && best.d.id !== d.id ? "<button class='btn link' type='button' id='resetPick'>Use best value instead</button>" : "";
+    el.innerHTML =
+      "<div class='head'><div><span class='label'>Mortgage deal</span><h3>" + esc(d.lender) + (d.product ? ", " + esc(d.product) : "") + "</h3></div><div style='display:flex;gap:8px;align-items:center;flex-wrap:wrap'>" + tag + reset + "</div></div>" +
+      "<div class='facts'>" +
+        "<div><div class='t'>Monthly for " + d.fixYears + " yr" + (d.fixYears === 1 ? "" : "s") + "</div><div class='n'>" + gbp(c.m) + "</div></div>" +
+        "<div><div class='t'>Cost over the fix</div><div class='n'>" + gbp(c.total) + "</div></div>" +
+        "<div><div class='t'>Owed when fix ends</div><div class='n'>" + gbp(c.bal) + "</div></div>" +
+        "<div><div class='t'>Monthly after fix</div><div class='n'>" + (c.after != null ? gbp(c.after) : "-") + "</div></div>" +
+      "</div>" +
+      (best && best.d.id !== d.id && chosen.eligible ? "<p class='small muted'>Costs " + gbp(c.perYear - best.c.perYear) + " a year more than the best value deal (" + esc(best.d.lender) + "). It may still be worth it for a longer fix or better terms.</p>" : "");
+    const btn = $("resetPick");
+    if (btn) btn.addEventListener("click", () => { S.selectedDealId = null; changed(); });
+  }
+
+  function lever(icon, html){ return "<div class='lever'><span class='ic'>" + icon + "</span><p>" + html + "</p></div>"; }
+
+  // How to describe putting `extra` more into the deposit, in whichever mode is active
+  function moreDown(r, extra){
+    if (extra > r.keep) return "That's more than you have left in savings.";
+    return r.mode === "deposit"
+      ? "Raise your deposit to " + gbp(r.deposit + extra) + ", leaving " + gbp(r.keep - extra) + " in savings."
+      : "You could do this by keeping " + gbp(r.keep - extra) + " in savings.";
+  }
+
+  function renderLevers(r, mp, mk, picked, rateUsed){
+    const out = [];
+    const depMode = r.mode === "deposit";
+    if (picked && !picked.eligible && r.loan > 0){
+      const extra = r.loan - r.price * picked.d.maxLtv/100;
+      out.push(lever("✓", "<b>Put " + gbp(extra) + " more down to qualify for " + esc(picked.d.lender) + "</b>, which needs " + picked.d.maxLtv + "% LTV or less. " +
+        moreDown(r, extra)));
+    }
+    if (!r.ok){
+      $("leversTitle").textContent = "Ways to make it work";
+      if (mp > 0) out.push(lever("£", "<b>Lower the price to " + gbp(mp) + "</b>, " + gbp(r.price - mp) + " less than your target."));
+      if (r.okCash && r.okLtv && !r.okIncome){
+        const needIncome = r.loan / S.multiple;
+        out.push(lever("↑", "<b>Raise combined salary to " + gbp(needIncome) + "</b>, " + gbp(needIncome - r.income) + " more a year at " + S.multiple + "×."));
+        const gap = r.loan - r.maxLoan;
+        if (gap <= r.keep) out.push(lever("◐", depMode
+          ? "<b>Raise your deposit to " + gbp(r.deposit + gap) + "</b>, leaving " + gbp(r.keep - gap) + " in savings."
+          : "<b>Keep " + gbp(r.keep - gap) + " in savings instead of " + gbp(r.keep) + "</b> to put more into the deposit."));
+        else if (r.keep > 0) out.push(lever("◐", "Putting all your savings in still leaves you " + gbp(gap - r.keep) + " short on borrowing."));
+        const needMult = r.loan / r.income;
+        if (r.income > 0 && needMult <= 6) out.push(lever("×", "<b>Find a lender offering " + needMult.toFixed(2) + "× income.</b> Some offer 5× to 5.5× for higher earners or certain professions."));
+        out.push(lever("⌂", "<b>Sell for " + gbp(S.saleValue + gap/(1 - S.agentPct/100)) + "</b> or more, to cover the gap with extra equity."));
+      } else if (!r.okCash){
+        out.push(lever("◐", depMode
+          ? "<b>Lower your deposit to " + gbp(Math.max(0, r.spare)) + "</b> or less, so it fits alongside stamp duty and moving costs."
+          : "You need " + gbp(-r.cash) + " more cash just to cover stamp duty and costs. Lower the amount kept in savings or the price."));
+      } else if (!r.okLtv){
+        out.push(lever("◐", "Lenders need at least a 5% deposit (" + gbp(r.price*0.05) + "). " + (depMode ? "Raise your deposit" : "Keep less in savings") + " or lower the price."));
+      }
+    } else {
+      $("leversTitle").textContent = "Ways to get a better deal";
+      const ltvPct = r.ltv*100;
+      const nextBand = [...LTV_BANDS].reverse().find(b => b < ltvPct - 1e-9);
+      if (nextBand && r.loan > 0){
+        const targetLoan = r.price * nextBand/100;
+        const extra = r.loan - targetLoan;
+        out.push(lever("%", "<b>Put " + gbp(extra) + " more down to reach " + nextBand + "% LTV.</b> Lenders price in bands, so each step down usually unlocks a lower rate. " + moreDown(r, extra)));
+      }
+      if (depMode){
+        const minDep = Math.max(r.price*0.05, r.price - r.maxLoan);
+        if (minDep < r.deposit - 500) out.push(lever("◐", "<b>You could put down as little as " + gbp(minDep) + "</b> and keep " + gbp(r.keep + r.deposit - minDep) + " in savings, though you'd borrow more and pay more each month."));
+      } else if (mk > r.keep) out.push(lever("◐", "<b>You could keep up to " + gbp(mk) + " in savings</b> and still afford this, though you'd borrow more and pay more each month."));
+      out.push(lever("£", "<b>Your ceiling is about " + gbp(mp) + "</b> " + (depMode ? "with a " + gbp(r.deposit) + " deposit." : "keeping " + gbp(r.keep) + " in savings.")));
+      const pctIncome = r.income > 0 ? payment(r.loan, rateUsed, S.termYears)*12 / r.income : 0;
+      if (pctIncome > 0) out.push(lever("≈", "Repayments at " + rateUsed + "% would take <b>" + pct(pctIncome) + " of gross income</b>. Many people aim for under 30% to 35% of take-home pay."));
+    }
+    $("levers").innerHTML = out.join("") || "<p class='muted'>Nothing to suggest with these numbers.</p>";
+  }
+
+  function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+  function renderDeals(costed, best, chosen){
+    $("exampleBanner").hidden = !usingExamples;
+    const sorted = [...costed].sort((a,b) => (b.eligible - a.eligible) || (a.c.perYear - b.c.perYear));
+    if (!sorted.length){
+      $("dealRows").innerHTML = "<tr><td colspan='11' class='muted'>No deals yet. Add one from your broker or a comparison site.</td></tr>";
+      return;
+    }
+    $("dealRows").innerHTML = sorted.map(({d, c, eligible}) => {
+      const isBest = best && best.d.id === d.id;
+      const status = isBest ? "<span class='pill good'>Best value</span>" : eligible ? "" : "<span class='pill bad'>Needs " + d.maxLtv + "% LTV</span>";
+      const delta = best && eligible && !isBest ? "<div class='deal-sub'>+" + gbp(c.perYear - best.c.perYear) + "/yr</div>" : "";
+      const acts = usingExamples ? "" :
+        (confirmDelete === d.id
+          ? "<button class='btn link danger' data-act='del-yes' data-id='" + d.id + "'>Delete</button><button class='btn link' data-act='del-no'>Keep</button>"
+          : "<button class='btn link' data-act='edit' data-id='" + d.id + "'>Edit</button><button class='btn link danger' data-act='del' data-id='" + d.id + "'>Remove</button>");
+      const fees = (d.fee ? gbp(d.fee) : "£0") + (d.cashback ? "<div class='deal-sub'>" + gbp(d.cashback) + " back</div>" : "");
+      const isChosen = chosen && chosen.d.id === d.id;
+      return "<tr data-id='" + esc(d.id) + "' class='" + (isChosen ? "chosen " : "") + (eligible ? "" : "ineligible") + "'>" +
+        "<td class='pick'><input type='radio' name='pick' id='pick-" + esc(d.id) + "' value='" + esc(d.id) + "'" + (isChosen ? " checked" : "") + " aria-label='Use " + esc(d.lender) + " " + esc(d.product) + "'></td>" +
+        "<td><div class='deal-name'>" + esc(d.lender) + " " + status + "</div><div class='deal-sub'>" + esc(d.product) + (d.erc ? " · ERC " + esc(d.erc) : "") + "</div>" + (d.notes ? "<div class='notes'>" + esc(d.notes) + "</div>" : "") + "</td>" +
+        "<td class='num'>" + d.rate.toFixed(2) + "%</td>" +
+        "<td class='num'>" + d.fixYears + " yr</td>" +
+        "<td class='num'>" + fees + "</td>" +
+        "<td class='num'>" + d.maxLtv + "%</td>" +
+        "<td class='num'>" + gbp(c.m) + "</td>" +
+        "<td class='num'>" + gbp(c.total) + "</td>" +
+        "<td class='num'><b>" + gbp(c.perYear) + "</b>" + delta + "</td>" +
+        "<td class='num'>" + (c.after != null ? gbp(c.after) + "<div class='deal-sub'>at " + d.svr + "%</div>" : "-") + "</td>" +
+        "<td class='acts'>" + acts + "</td></tr>";
+    }).join("");
+  }
+
+  // ---------- inputs ----------
+  function writeInputs(){
+    document.querySelectorAll("[data-k]").forEach(el => {
+      if (document.activeElement === el) return;
+      el.value = fmtInput(el.dataset.k, S[el.dataset.k]);
+    });
+    $("keep").value = S.keep;
+  }
+  document.querySelectorAll("[data-k]").forEach(el => {
+    el.addEventListener("input", () => { S[el.dataset.k] = parseNum(el.value); changed(); });
+    el.addEventListener("blur", () => { el.value = fmtInput(el.dataset.k, S[el.dataset.k]); });
+  });
+  $("priceRange").addEventListener("input", e => { S.price = +e.target.value; $("price").value = fmtInput("price", S.price); changed(); });
+  $("keep").addEventListener("input", e => { S.keep = +e.target.value; changed(); });
+  $("depositRange").addEventListener("input", e => { S.deposit = +e.target.value; $("deposit").value = fmtInput("deposit", S.deposit); changed(); });
+  document.querySelectorAll(".seg button[data-mode]").forEach(b => b.addEventListener("click", () => {
+    if (S.mode === b.dataset.mode) return;
+    // carry the current figures across so switching doesn't jump the numbers
+    const now = scenario(S);
+    if (b.dataset.mode === "deposit") S.deposit = Math.round(now.deposit/1000)*1000;
+    else S.keep = Math.max(0, Math.min(S.savings, Math.round(now.keep/500)*500));
+    S.mode = b.dataset.mode;
+    writeInputs(); changed();
+  }));
+
+  function changed(){
+    if (S.termYears < 1) S.termYears = 1;
+    render(); scheduleSave();
+  }
+
+  // ---------- persistence (this browser only) ----------
+  const KEY_SCENARIO = "nmp-scenario", KEY_DEALS = "nmp-deals";
+  function setSave(state, text){ const el = $("saveState"); el.dataset.s = state; el.textContent = text; }
+  function readJSON(key){ try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : null; } catch { return null; } }
+  function writeJSON(key, value){
+    try { localStorage.setItem(key, JSON.stringify(value)); setSave("saved", "Saved in this browser"); return true; }
+    catch { setSave("local", "This browser is blocking saving"); return false; }
+  }
+  function scheduleSave(){
+    setSave("saving", "Saving…");
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => writeJSON(KEY_SCENARIO, S), 500);
+  }
+  function saveDeals(){
+    usingExamples = deals.length === 0;
+    return writeJSON(KEY_DEALS, deals);
+  }
+  function load(){
+    const saved = readJSON(KEY_SCENARIO);
+    if (saved && typeof saved === "object") S = Object.assign({}, DEFAULTS, saved);
+    const savedDeals = readJSON(KEY_DEALS);
+    deals = Array.isArray(savedDeals) ? savedDeals : [];
+    usingExamples = deals.length === 0;
+  }
+  // keep other open tabs of the planner in step
+  window.addEventListener("storage", e => {
+    if (e.key !== KEY_SCENARIO && e.key !== KEY_DEALS) return;
+    load(); writeInputs(); render();
+  });
+  const newId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+
+  // ---------- deal form ----------
+  const formFields = {fLender:"lender", fProduct:"product", fRate:"rate", fYears:"fixYears", fFee:"fee", fCashback:"cashback", fLtv:"maxLtv", fSvr:"svr", fErc:"erc", fNotes:"notes"};
+  const textFields = ["lender","product","erc","notes"];
+  function openForm(d){
+    editingId = d ? d.id : null;
+    for (const [id,k] of Object.entries(formFields)) $(id).value = d && d[k] != null && d[k] !== 0 ? d[k] : (d && k==="fee" ? 0 : "");
+    $("formErr").textContent = "";
+    $("saveDealBtn").textContent = d ? "Save changes" : "Save deal";
+    $("dealForm").hidden = false;
+    $("fLender").focus();
+  }
+  $("addBtn").addEventListener("click", () => openForm(null));
+  $("cancelBtn").addEventListener("click", () => { $("dealForm").hidden = true; editingId = null; });
+  $("dealForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const d = {};
+    for (const [id,k] of Object.entries(formFields)) d[k] = textFields.includes(k) ? $(id).value.trim() : parseNum($(id).value);
+    if (!d.lender){ $("formErr").textContent = "Add a lender name."; return; }
+    if (!(d.rate > 0)){ $("formErr").textContent = "Add the initial rate, e.g. 4.29."; return; }
+    if (!(d.fixYears > 0)){ $("formErr").textContent = "Add how many years the rate is fixed for."; return; }
+    if (!(d.maxLtv > 0)){ $("formErr").textContent = "Add the maximum loan to value, e.g. 85."; return; }
+    if (editingId){
+      const i = deals.findIndex(x => x.id === editingId);
+      if (i >= 0) deals[i] = Object.assign({id: editingId, createdAt: deals[i].createdAt}, d, {updatedAt: new Date().toISOString()});
+    } else {
+      deals.push(Object.assign({id: newId()}, d, {createdAt: new Date().toISOString()}));
+    }
+    if (!saveDeals()){ $("formErr").textContent = "This browser is blocking saving, so the deal will be lost when you close the page."; }
+    else { $("dealForm").hidden = true; editingId = null; }
+    render();
+  });
+  $("dealRows").addEventListener("change", e => {
+    if (e.target.name === "pick" && S.selectedDealId !== e.target.value){ S.selectedDealId = e.target.value; changed(); }
+  });
+  $("dealRows").addEventListener("click", e => {
+    const b = e.target.closest("button[data-act]");
+    if (!b){
+      const tr = e.target.closest("tr[data-id]");
+      if (tr && S.selectedDealId !== tr.dataset.id){ S.selectedDealId = tr.dataset.id; changed(); }
+      return;
+    }
+    const id = b.dataset.id, act = b.dataset.act;
+    if (act === "edit") openForm(deals.find(d => d.id === id));
+    else if (act === "del"){ confirmDelete = id; render(); }
+    else if (act === "del-no"){ confirmDelete = null; render(); }
+    else if (act === "del-yes"){
+      confirmDelete = null;
+      deals = deals.filter(x => x.id !== id);
+      if (S.selectedDealId === id){ S.selectedDealId = null; scheduleSave(); }
+      saveDeals(); render();
+    }
+  });
+
+  // ---------- boot ----------
+  try { const o = localStorage.getItem("nmp-more"); if (o === "1") $("moreDetails").open = true; } catch {}
+  $("moreDetails").addEventListener("toggle", e => { try { localStorage.setItem("nmp-more", e.target.open ? "1" : "0"); } catch {} });
+  load(); writeInputs(); render();
+})();
+</script>
+</body>
+</html>
