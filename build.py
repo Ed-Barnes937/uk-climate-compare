@@ -88,7 +88,8 @@ def build_private():
     write('build/private.html', page(
         {**DATASETS, 'houses': PRIVATE_HOUSES}, 'UK Climate Compare (private)',
         head='\n<meta name="robots" content="noindex">',
-        extra='\n  Bedroom counts and Scottish sold prices from Rightmove, for personal use only.'))
+        extra='\n  Bedroom counts and Scottish sold prices from Rightmove, for personal use only.'
+              '\n  <a href="houses.html">Detached house prices by area</a> (same password).'))
     subprocess.run(
         ['npx', '-y', STATICRYPT, 'build/private.html', '-d', '.', '-c', '.staticrypt.json', '--short',
          '--remember', '0', '--template-title', 'UK Climate Compare', '--template-button', 'Open',
