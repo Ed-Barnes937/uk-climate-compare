@@ -233,6 +233,8 @@ def previews():
                             '--force-color-profile=srgb', '--window-size=1200,630', f'--screenshot={out}', card.as_uri()],
                            check=True, capture_output=True)
             print(f'previews/{slug}.png: {out.stat().st_size / 1024:.0f} KiB')
+            if slug == 'hub':
+                continue
             # The hub's thumbnail: the map alone, since the hub prints the title and description beside it.
             card.write_text(f"""<!doctype html><meta charset="utf-8"><style>{read('src/preview.css')}</style>
 <div class="thumb">{svg(kind)}</div>""", encoding='utf-8')
