@@ -1,6 +1,6 @@
-# UK House Dashboards
+# House moving helpers
 
-Dashboards for choosing where to live in the UK, served at https://ed-barnes937.github.io/uk-house-dashboards/.
+Tools for planning a move in the UK, served at https://ed-barnes937.github.io/uk-house-dashboards/.
 
 The main one here is UK Climate Compare: average weather across UK council areas and Met Office climate stations (summer and winter temperatures, rainfall, days with rain, sunshine, air frosts and day length, for 2016-2025 or 2006-2025).
 
@@ -11,11 +11,11 @@ python3 build.py              # index.html, climate.html and (with data/private/
 python3 build.py --previews   # also redraw the link preview images in previews/ (needs Google Chrome)
 ```
 
-To add a dashboard, add an entry to `DASHBOARDS` in `build.py` (the hub lists them in order, and each gets a preview image), then rebuild with `--previews`.
+To add a dashboard, add an entry to `DASHBOARDS` in `build.py` (the hub lists them in order unless `hidden`, and each gets a preview image), then rebuild with `--previews`.
 
 | Path | What |
 | --- | --- |
-| `index.html` | The hub: a card per dashboard in `DASHBOARDS` |
+| `index.html` | The hub: a card per dashboard in `DASHBOARDS`, except hidden ones (the public climate page is hidden but still built) |
 | `climate.html` | UK Climate Compare: one self-contained page (d3 and all data inlined) |
 | `previews/` | Link preview images (1200x630, `<slug>.png`) and the hub's map thumbnails (`<slug>-map.png`), drawn from public data only. Every page carries Open Graph tags pointing at its image; on the encrypted pages they are added to the password screen, which is all a link preview can see |
 | `src/dashboard.html` | The dashboard: markup, styles, calcs and drawing |

@@ -23,12 +23,12 @@ PRIVATE_HOUSES = 'private/uk_area_houses_private.csv'
 KEYCHAIN_SERVICE = 'uk-climate-compare-private'
 STATICRYPT = 'staticrypt@3.5.4'
 SITE = 'https://ed-barnes937.github.io/uk-house-dashboards/'
-SITE_TITLE = 'UK House Dashboards'
-SITE_DESCRIPTION = 'Dashboards for choosing where to live in the UK: climate and detached house prices by area.'
-# The hub lists these in order. houses.html is built by the private uk-house-history repo, which adds the
+SITE_TITLE = 'House moving helpers'
+SITE_DESCRIPTION = 'Tools for planning a move in the UK: where to live and what it costs.'
+# The hub lists these in order, except hidden ones (still built and shareable, just not listed). houses.html is built by the private uk-house-history repo, which adds the
 # same preview tags itself (keep its title and description in step with this entry).
 DASHBOARDS = [
-    {'slug': 'climate', 'file': 'climate.html', 'title': 'UK Climate Compare', 'locked': False,
+    {'slug': 'climate', 'file': 'climate.html', 'title': 'UK Climate Compare', 'locked': False, 'hidden': True,
      'description': 'Compare average weather across UK council areas and Met Office stations: temperature, rain, '
                     'rain days, sunshine, frost and day length.'},
     {'slug': 'climate-private', 'file': 'private.html', 'title': 'UK Climate Compare (private)', 'locked': True,
@@ -114,7 +114,7 @@ def hub():
   <img src="previews/{d['slug']}-map.png" width="480" height="300" alt="">
   <span class="card-text"><span class="card-title">{html.escape(d['title'])}</span>{' <span class="tag">Password</span>' if d['locked'] else ''}
   <span class="card-desc">{html.escape(d['description'])}</span></span>
-</a></li>""" for d in DASHBOARDS)
+</a></li>""" for d in DASHBOARDS if not d.get('hidden'))
     return f"""<!doctype html>
 <html lang="en-GB">
 <head>
@@ -213,7 +213,7 @@ def previews():
         return (f'<svg viewBox="0 0 {x1 - x0:.0f} {y1 - y0:.0f}" xmlns="http://www.w3.org/2000/svg">'
                 f'<g stroke="#f6f5f1" stroke-width="0.6" stroke-linejoin="round" fill-rule="evenodd">{"".join(paths)}</g></svg>')
 
-    cards = [('hub', SITE_TITLE, SITE_DESCRIPTION, False, 'climate')]
+    cards = [('hub', SITE_TITLE, SITE_DESCRIPTION, False, 'houses')]
     cards += [(d['slug'], d['title'], d['description'], d['locked'], d['slug'].split('-')[0]) for d in DASHBOARDS]
     chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
     (ROOT / 'previews').mkdir(exist_ok=True)
